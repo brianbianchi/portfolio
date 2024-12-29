@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block title %}{{user.username}}{% endblock %}
+{% block content %}
+
+<div class="border-bottom">
+    <h1>{{user.username}}</h1>
+    <p class="mb-2">Joined {{user.date_joined|naturalday}}</p>
+</div>
+<h2>Portfolios</h2>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">League</th>
+            <th scope="col">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for portfolio in portfolios %}
+        <tr>
+            <td>
+                <a href="{% url 'view_portfolio' id=portfolio.id %}">
+                    {{portfolio.name}}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'view_league' id=portfolio.league.id %}">
+                    {{portfolio.league.name}}
+                </a>
+            </td>
+            <td>{{portfolio.value|intcomma}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

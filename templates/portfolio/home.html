@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center border-bottom">
+    <!-- <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+    <h1 class="display-5 fw-bold text-body-emphasis">Fantasy stock market</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Compete to make the best returns in the stock market.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/leagues" role="button" class="btn btn-primary btn-lg px-4 gap-3">Join a league</a>
+            <a href="/create_league" role="button" class="btn btn-success btn-lg px-4">Create a league</a>
+        </div>
+    </div>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+        <div class="container px-5 py-5">
+            <img src="{% static 'images/email.png' %}" class="img-fluid border rounded-3 shadow-lg mb-4"
+                alt="Example image" width="700" loading="lazy">
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5">
+    Home
+</div>
+
+{% endblock %}

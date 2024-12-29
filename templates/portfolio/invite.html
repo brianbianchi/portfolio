@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% block title %}Invite user to a league{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{form|crispy}}
+  <button type="submit" class="btn btn-success">Invite</button>
+</form>
+{% endblock %}
