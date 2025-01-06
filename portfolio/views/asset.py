@@ -1,14 +1,7 @@
-from decimal import Decimal
 from django.shortcuts import redirect, render
-from django.http import (
-    HttpResponseForbidden,
-    HttpResponseNotAllowed,
-    HttpResponseBadRequest,
-)
 import yfinance as yf
-from ..helper import get_stock_price
 from ..forms import TransactionForm
-from ..models import Asset, League, Portfolio, Transaction
+from ..models import Portfolio
 
 
 def asset(request, ticker):

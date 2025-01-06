@@ -1,9 +1,7 @@
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from ..forms import LeagueUserForm
-from ..models import Asset, League, LeagueUser, Portfolio, Transaction
+from ..models import League, LeagueUser
 
 
 @login_required(login_url="/login")

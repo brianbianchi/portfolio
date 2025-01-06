@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from ..forms import RegisterForm
-from ..models import League, Portfolio
+from ..models import Portfolio
 
 
 def register(request):
