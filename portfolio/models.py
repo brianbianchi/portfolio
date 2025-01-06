@@ -34,6 +34,10 @@ class Portfolio(models.Model):
     name = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
 
+    def save(self, *args, **kwargs):
+        self.value = self.league.start_value
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.name}"
 

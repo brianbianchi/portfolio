@@ -52,7 +52,6 @@ class TransactionForm(forms.ModelForm):
         price = get_stock_price(ticker)
         cleaned_data["value"] = price
         if is_purchase:
-            price = get_stock_price(ticker)
             cash = Asset.objects.get(is_currency=True, portfolio=portfolio)
             if price * quantity > cash.value:
                 self.add_error(
