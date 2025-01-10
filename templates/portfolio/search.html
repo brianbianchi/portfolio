@@ -5,91 +5,10 @@
 {% block content %}
 <h1>Search</h1>
 
-<h2>Assets</h2>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Exchange</th>
-            <th scope="col">Symbol</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for quote in quotes %}
-        <tr>
-            <td>
-                <a href="{% url 'asset' ticker=quote.symbol %}">
-                    {{quote.shortname}}
-                </a>
-            </td>
-            <td>
-                {{quote.exchange}}
-            </td>
-            <td>
-                <a href="{% url 'asset' ticker=quote.symbol %}">
-                    {{quote.symbol}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% include '../components/quotes_list.html' with quotes=quotes %}
 
-<h2>Users</h2>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Username</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>
-                <a href="{% url 'user' name=user.username %}">
-                    {{user.username}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% include '../components/users_list.html' with users=users %}
 
-<h2>Leagues</h2>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Author</th>
-            <th scope="col">Created</th>
-            <th scope="col">Initial value</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for league in leagues %}
-        <tr>
-            <td>
-                <a href="{% url 'view_league' id=league.id %}">
-                    {{league.name}}
-                </a>
-            </td>
-            <td>
-                {{league.description}}
-            </td>
-            <td>
-                <a href="{% url 'user' name=league.author.username %}">
-                    {{league.author.username}}
-                </a>
-            </td>
-            <td>
-                {{league.created|naturalday}}
-            </td>
-            <td>
-                {{league.start_value|intcomma}}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% include '../components/leagues_list.html' with leagues=leagues %}
+
 {% endblock %}

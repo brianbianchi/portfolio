@@ -1,7 +1,5 @@
 {% extends 'core/base.html' %}
-{% load humanize %}
-{% block title %}leagues{% endblock %}
-
+{% block title %}Leagues{% endblock %}
 {% block content %}
 
 {% if user.is_authenticated %}
@@ -10,65 +8,5 @@
 </a>
 {% endif %}
 
-<div class="list-group">
-    {% for league in leagues %}
-    <a href="/league/{{league.id}}" class="list-group-item list-group-item-action" aria-current="true">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{league.name}}</h5>
-            <small>
-                participant info
-            </small>
-        </div>
-        <p class="mb-1">{{league.description}}</p>
-        <small>
-            Created {{league.created|naturalday}} by {{league.author.username}}.
-        </small>
-    </a>
-    {% empty %}
-    <p>No leagues yet</p>
-    {% endfor %}
-</div>
-{% if leagues.has_previous or leagues.has_next %}
-<nav>
-    <ul class="pagination">
-        {% if leagues.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="First">
-                <span aria-hidden="true">&laquo;&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="?page={{ leagues.previous_page_number }}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        {% endif %}
-
-        {% for num in leagues.paginator.page_range %}
-        {% if leagues.number == num %}
-        <li class="page-item active">
-            <span class="page-link">{{ num }}</span>
-        </li>
-        {% else %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-
-        {% if leagues.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ leagues.next_page_number }}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="?page={{ leagues.paginator.num_pages }}" aria-label="Last">
-                <span aria-hidden="true">&raquo;&raquo;</span>
-            </a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
+{% include '../components/leagues_list.html' with leagues=leagues %}
 {% endblock %}

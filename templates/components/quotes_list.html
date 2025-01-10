@@ -1,0 +1,31 @@
+{% load humanize %}
+
+<h2>Assets</h2>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Exchange</th>
+            <th scope="col">Symbol</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for quote in quotes %}
+        <tr>
+            <td>
+                <a href="{% url 'asset' ticker=quote.symbol %}">
+                    {{quote.shortname}}
+                </a>
+            </td>
+            <td>
+                {{quote.exchange}}
+            </td>
+            <td>
+                <a href="{% url 'asset' ticker=quote.symbol %}">
+                    {{quote.symbol}}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

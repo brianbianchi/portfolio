@@ -8,6 +8,7 @@ class League(models.Model):
     start_value = models.DecimalField(decimal_places=0, max_digits=200)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+    num_users = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.name}"

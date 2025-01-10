@@ -1,0 +1,40 @@
+{% load humanize %}
+
+<h2>Transactions</h2>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Ticker</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Value</th>
+            <th scope="col">Total value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in txns %}
+        <tr>
+            <td>
+                <a href="{% url 'asset' ticker=txn.ticker %}">
+                    {{txn.ticker}}
+                </a>
+            </td>
+            <td>{{txn.quantity}}</td>
+            {% if txn.is_purchase %}
+            <td style="color: green;">
+                ${{txn.value|intcomma}}
+            </td>
+            <td style="color: green;">
+                ${{txn.total_value|intcomma}}
+            </td>
+            {% else %}
+            <td style="color: red;">
+                ${{txn.value|intcomma}}
+            </td>
+            <td style="color: red;">
+                ${{txn.total_value|intcomma}}
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

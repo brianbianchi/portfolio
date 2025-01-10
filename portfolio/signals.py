@@ -13,6 +13,14 @@ def league_post_save(sender, instance, created, **kwargs):
         league_user.save()
 
 
+@receiver(post_save, sender=LeagueUser)
+def league_user_post_save(sender, instance, created, **kwargs):
+    if created:
+        league = instance.league
+        league.num_users += 1
+        league.save()
+
+
 @receiver(post_save, sender=Portfolio)
 def portfolio_post_save(sender, instance, created, **kwargs):
     if created:

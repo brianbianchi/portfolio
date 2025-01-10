@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
@@ -8,18 +9,19 @@ from ..models import League, LeagueUser, Portfolio
 
 def view_league(request, id):
     if request.method != "GET":
-        return HttpResponseNotAllowed
+        return HttpResponseNotAllowed("This method is not allowed.")
     league = League.objects.get(id=id)
     portfolios = Portfolio.objects.filter(league=league)
-    league_users = LeagueUser.objects.filter(league=league)
-    context = {"league": league, "portfolios": portfolios, "league_users": league_users}
+    league_users = LeagueUser.objects.filter(league=league).values("user")
+    users = User.objects.filter(id__in=league_users)
+    context = {"league": league, "portfolios": portfolios, "users": users}
     return render(request, "portfolio/league.html", context)
 
 
 def view_leagues(request):
     if request.method != "GET":
-        return HttpResponseNotAllowed
-    PAGE_SIZE = 25
+        return HttpResponseNotAllowed("This method is not allowed.")
+    PAGE_SIZE = 20
     page = request.GET.get("page") or 1
     leagues = League.objects.all()
     paginator = Paginator(leagues, PAGE_SIZE)
@@ -47,7 +49,7 @@ def create_league(request):
 def edit_league(request, id):
     league = League.objects.get(id=id)
     if request.user != league.author:
-        return HttpResponseForbidden
+        return HttpResponseForbidden("You're forbidden from editing this league.")
     if request.method == "POST":
         form = LeagueForm(request.POST, instance=league)
         if form.is_valid():
