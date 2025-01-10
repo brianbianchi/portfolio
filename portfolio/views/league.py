@@ -15,7 +15,7 @@ def view_league(request, id):
     league_users = LeagueUser.objects.filter(league=league).values("user")
     users = User.objects.filter(id__in=league_users)
     context = {"league": league, "portfolios": portfolios, "users": users}
-    return render(request, "portfolio/league.html", context)
+    return render(request, "league/league.html", context)
 
 
 def view_leagues(request):
@@ -26,7 +26,7 @@ def view_leagues(request):
     leagues = League.objects.all()
     paginator = Paginator(leagues, PAGE_SIZE)
     leagues_page = paginator.get_page(page)
-    return render(request, "portfolio/leagues.html", {"leagues": leagues_page})
+    return render(request, "league/leagues.html", {"leagues": leagues_page})
 
 
 @login_required(login_url="/login")
@@ -42,7 +42,7 @@ def create_league(request):
     else:
         form = LeagueForm()
 
-    return render(request, "portfolio/create_league.html", {"form": form})
+    return render(request, "league/create_league.html", {"form": form})
 
 
 @login_required(login_url="/login")
@@ -56,7 +56,7 @@ def edit_league(request, id):
             form.save()
             return redirect(f"/league/{league.id}")
     form = LeagueForm(instance=league)
-    return render(request, "portfolio/edit_league.html", {"form": form})
+    return render(request, "league/edit_league.html", {"form": form})
 
 
 @login_required(login_url="/login")

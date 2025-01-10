@@ -26,4 +26,4 @@ def asset(request, ticker):
         "portfolios": portfolios,
         "form": form,
     }
-    return render(request, "portfolio/asset.html", context)
+    return render(request, "core/asset.html", context)

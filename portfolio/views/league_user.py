@@ -7,6 +7,7 @@ from ..models import League, LeagueUser
 @login_required(login_url="/login")
 def invite(request, league_id):
     league = League.objects.get(id=league_id)
+    form = LeagueUserForm(user=request.user, default_league=league)
     if request.method == "POST":
         form = LeagueUserForm(request.POST, user=request.user, default_league=league)
         if form.is_valid():
@@ -18,9 +19,5 @@ def invite(request, league_id):
             ).exists():
                 league_user.save()
             return redirect(f"/league/{league_user.league.id}")
-        else:
-            return render(request, "portfolio/invite.html", {"form": form})
-    else:
-        form = LeagueUserForm(user=request.user, default_league=league)
 
-    return render(request, "portfolio/invite.html", {"form": form})
+    return render(request, "league/invite.html", {"form": form})

@@ -22,4 +22,4 @@ def user(request, name):
     user = User.objects.get_by_natural_key(username=name)
     portfolios = Portfolio.objects.filter(user=user)
     context = {"user": user, "portfolios": portfolios}
-    return render(request, "portfolio/user.html", context)
+    return render(request, "core/user.html", context)

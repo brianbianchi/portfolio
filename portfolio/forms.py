@@ -132,6 +132,7 @@ class LeagueUserForm(forms.ModelForm):
         username = self.cleaned_data.get("username")
         try:
             user = User.objects.get(username=username)
+            return user
         except:
             self.add_error("username", "Invalid user.")
-        return user
+            return username

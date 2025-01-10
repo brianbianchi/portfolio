@@ -6,7 +6,7 @@ from ..models import League
 
 
 def home(request):
-    return render(request, "portfolio/home.html")
+    return render(request, "core/home.html")
 
 
 def search(request):
@@ -16,4 +16,4 @@ def search(request):
     users = User.objects.filter(username__icontains=query)
     leagues = League.objects.filter(name__icontains=query)
     context = {"users": users, "leagues": leagues, "quotes": quotes}
-    return render(request, "portfolio/search.html", context)
+    return render(request, "core/search.html", context)
