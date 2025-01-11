@@ -1,19 +1,25 @@
-<h2>Users</h2>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Username</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>
-                <a href="{% url 'user' name=user.username %}">
-                    {{user.username}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="my-3">
+    <h2>Users</h2>
+    {% if users %}
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    <a href="{% url 'user' name=user.username %}">
+                        {{user.username}}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="fst-italic fw-light">No users found.</p>
+    {% endif %}
+</div>
