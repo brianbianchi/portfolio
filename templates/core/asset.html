@@ -23,24 +23,28 @@
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr>
+                        <th scope="row">Price</th>
+                        <td>${{price|floatformat:2}}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">Exchange</th>
                         <td>{{info.exchange}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Previous close</th>
-                        <td>{{info.previousClose}}</td>
+                        <td>${{info.previousClose|floatformat:2}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Open</th>
-                        <td>{{info.open}}</td>
+                        <td>${{info.open|floatformat:2}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Day's range</th>
-                        <td>{{info.dayLow}} - {{info.dayHigh}}</td>
+                        <td>${{info.dayLow|floatformat:2}} - ${{info.dayHigh|floatformat:2}}</td>
                     </tr>
                     <tr>
                         <th scope="row">52 week range</th>
-                        <td>{{info.fiftyTwoWeekLow}} - {{info.fiftyTwoWeekHigh}}</td>
+                        <td>${{info.fiftyTwoWeekLow|floatformat:2}} - ${{info.fiftyTwoWeekHigh|floatformat:2}}</td>
                     </tr>
                     <tr>
                         <th scope="row">PE ratio</th>

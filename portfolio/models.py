@@ -43,6 +43,15 @@ class Portfolio(models.Model):
         return f"{self.name}"
 
 
+class Snapshot(models.Model):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    value = models.DecimalField(decimal_places=2, max_digits=200)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.portfolio.name} has a value of {self.value} as of {self.created}"
+
+
 class Asset(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     is_currency = models.BooleanField(default=False)
