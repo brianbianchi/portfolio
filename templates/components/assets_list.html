@@ -10,9 +10,6 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Value</th>
                 <th scope="col">Total value</th>
-                {% if user == portfolio.user %}
-                <th scope="col"></th>
-                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -32,12 +29,6 @@
                 <td>{{asset.quantity}}</td>
                 <td>${{asset.value|intcomma}}</td>
                 <td>${{asset.total_value|intcomma}}</td>
-                {% if user == portfolio.user %}
-                <td>
-                    <a href="{% url 'delete_portfolio' id=portfolio.id %}" class="btn btn-danger my-3"
-                        role="button">Sell</a>
-                </td>
-                {% endif %}
                 {% endif %}
             </tr>
             {% endfor %}

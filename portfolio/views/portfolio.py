@@ -35,21 +35,21 @@ def create_portfolio(request, league_id):
 @login_required(login_url="/login")
 def edit_portfolio(request, id):
     portfolio = Portfolio.objects.get(id=id)
-    if request.user != portfolio.author:
-        return HttpResponseForbidden
+    if request.user != portfolio.user:
+        return HttpResponseForbidden()
     if request.method == "POST":
-        form = PortfolioForm(request.POST, instance=portfolio)
+        form = PortfolioForm(request.POST, instance=portfolio, user=request.user)
         if form.is_valid():
             form.save()
             return redirect(f"/portfolio/{portfolio.id}")
-    form = PortfolioForm(instance=portfolio)
+    form = PortfolioForm(instance=portfolio, user=request.user)
     return render(request, "portfolio/edit_portfolio.html", {"form": form})
 
 
 @login_required(login_url="/login")
 def delete_portfolio(request, id):
     portfolio = Portfolio.objects.get(id=id)
-    if request.user != portfolio.author:
+    if request.user != portfolio.user:
         return HttpResponseForbidden()
     portfolio.delete()
     return redirect(f"/user/{request.user.username}")
