@@ -9,6 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         print("Update portfolio prices")
+        cache = {}
         portfolios = Portfolio.objects.all()
         for portfolio in portfolios:
             assets = Asset.objects.filter(portfolio=portfolio)
@@ -16,7 +17,12 @@ class Command(BaseCommand):
             for asset in assets:
                 if asset.is_currency:
                     continue
-                price = get_stock_price(asset.ticker)
+                price = Decimal(0)
+                if asset.ticker in cache:
+                    price = cache[asset.ticker]
+                else:
+                    price = get_stock_price(asset.ticker)
+                    cache[asset.ticker] = price
                 asset.value = price
                 asset.save()
                 total_value += price
