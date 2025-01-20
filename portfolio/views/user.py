@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from ..forms import RegisterForm
-from ..models import Portfolio
+from ..models import League, LeagueUser, Portfolio
 
 
 def register(request):
@@ -21,8 +21,10 @@ def register(request):
 def user(request, name):
     try:
         user = User.objects.get_by_natural_key(username=name)
+        league_users = LeagueUser.objects.filter(user=user).values("league")
+        leagues = League.objects.filter(id__in=league_users)
         portfolios = Portfolio.objects.filter(user=user)
-        context = {"user": user, "portfolios": portfolios}
+        context = {"user": user, "leagues": leagues, "portfolios": portfolios}
         return render(request, "core/user.html", context)
     except:
         return render(request, "shared/404.html")
