@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import League, LeagueUser, Portfolio, Asset, Transaction
+from .models import Asset, League, LeagueUser, Portfolio, Snapshot, Transaction
 
-models = [League, LeagueUser, Portfolio, Asset, Transaction]
+models = [Asset, League, LeagueUser, Portfolio, Snapshot, Transaction]
 admin.site.register(models)

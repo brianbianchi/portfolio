@@ -16,6 +16,7 @@ class Command(BaseCommand):
             total_value = Decimal(0)
             for asset in assets:
                 if asset.is_currency:
+                    total_value += asset.value
                     continue
                 price = Decimal(0)
                 if asset.ticker in cache:
@@ -25,7 +26,7 @@ class Command(BaseCommand):
                     cache[asset.ticker] = price
                 asset.value = price
                 asset.save()
-                total_value += price
+                total_value += price * asset.quantity
             snapshot = Snapshot()
             snapshot.portfolio = portfolio
             snapshot.value = total_value
