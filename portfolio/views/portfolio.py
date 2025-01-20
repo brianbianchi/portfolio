@@ -9,11 +9,14 @@ from ..models import Asset, League, Portfolio, Transaction
 def view_portfolio(request, id):
     if request.method != "GET":
         return HttpResponseNotAllowed
-    portfolio = Portfolio.objects.get(id=id)
-    txns = Transaction.objects.filter(portfolio=portfolio)
-    assets = Asset.objects.filter(portfolio=portfolio)
-    context = {"portfolio": portfolio, "txns": txns, "assets": assets}
-    return render(request, "portfolio/portfolio.html", context)
+    try:
+        portfolio = Portfolio.objects.get(id=id)
+        txns = Transaction.objects.filter(portfolio=portfolio)
+        assets = Asset.objects.filter(portfolio=portfolio)
+        context = {"portfolio": portfolio, "txns": txns, "assets": assets}
+        return render(request, "portfolio/portfolio.html", context)
+    except:
+        return render(request, "shared/404.html")
 
 
 @login_required(login_url="/login")

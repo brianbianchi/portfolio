@@ -19,7 +19,10 @@ def register(request):
 
 
 def user(request, name):
-    user = User.objects.get_by_natural_key(username=name)
-    portfolios = Portfolio.objects.filter(user=user)
-    context = {"user": user, "portfolios": portfolios}
-    return render(request, "core/user.html", context)
+    try:
+        user = User.objects.get_by_natural_key(username=name)
+        portfolios = Portfolio.objects.filter(user=user)
+        context = {"user": user, "portfolios": portfolios}
+        return render(request, "core/user.html", context)
+    except:
+        return render(request, "shared/404.html")

@@ -49,7 +49,7 @@ def txn_post_save(sender, instance, created, **kwargs):
             asset.quantity -= instance.quantity
             asset.value = instance.value
             asset.save()
-    except Exception as e:
+    except:
         asset = Asset()
         asset.portfolio = instance.portfolio
         asset.is_currency = False

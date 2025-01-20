@@ -10,12 +10,15 @@ from ..models import League, LeagueUser, Portfolio
 def view_league(request, id):
     if request.method != "GET":
         return HttpResponseNotAllowed("This method is not allowed.")
-    league = League.objects.get(id=id)
-    portfolios = Portfolio.objects.filter(league=league)
-    league_users = LeagueUser.objects.filter(league=league).values("user")
-    users = User.objects.filter(id__in=league_users)
-    context = {"league": league, "portfolios": portfolios, "users": users}
-    return render(request, "league/league.html", context)
+    try:
+        league = League.objects.get(id=id)
+        portfolios = Portfolio.objects.filter(league=league)
+        league_users = LeagueUser.objects.filter(league=league).values("user")
+        users = User.objects.filter(id__in=league_users)
+        context = {"league": league, "portfolios": portfolios, "users": users}
+        return render(request, "league/league.html", context)
+    except:
+        return render(request, "shared/404.html")
 
 
 def view_leagues(request):
