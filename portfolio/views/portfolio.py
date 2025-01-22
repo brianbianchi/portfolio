@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from ..forms import PortfolioForm
-from ..models import Asset, League, Portfolio, Transaction
+from ..models import Asset, League, Portfolio, Snapshot, Transaction
 
 
 def view_portfolio(request, id):
@@ -13,9 +13,23 @@ def view_portfolio(request, id):
         portfolio = Portfolio.objects.get(id=id)
         txns = Transaction.objects.filter(portfolio=portfolio)
         assets = Asset.objects.filter(portfolio=portfolio)
-        context = {"portfolio": portfolio, "txns": txns, "assets": assets}
+        snapshots = Snapshot.objects.all().order_by("created")
+        print(snapshots)
+
+        dates = [snapshot.created.strftime("%Y-%m-%d") for snapshot in snapshots]
+        print(dates)
+        values = [str(snapshot.value) for snapshot in snapshots]
+        print(values)
+        context = {
+            "portfolio": portfolio,
+            "txns": txns,
+            "assets": assets,
+            "graph_dates": dates,
+            "graph_values": values,
+        }
         return render(request, "portfolio/portfolio.html", context)
-    except:
+    except Exception as e:
+        print(f"Error: {str(e)}")
         return render(request, "shared/404.html")
 
 

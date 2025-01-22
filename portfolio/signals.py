@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Asset, League, LeagueUser, Portfolio, Transaction
+from .models import Asset, League, LeagueUser, Portfolio, Snapshot, Transaction
 
 
 @receiver(post_save, sender=League)
@@ -31,6 +31,10 @@ def portfolio_post_save(sender, instance, created, **kwargs):
         asset.portfolio = instance
         asset.value = instance.league.start_value
         asset.save()
+        snapshot = Snapshot()
+        snapshot.portfolio = instance
+        snapshot.value = instance.league.start_value
+        snapshot.save()
 
 
 @receiver(post_save, sender=Transaction)

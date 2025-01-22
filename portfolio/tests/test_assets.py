@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth.models import User
-from ..models import Asset, League, Portfolio, Transaction
+from ..models import Asset, League, Portfolio, Snapshot, Transaction
 
 
 class AssetsTest(TestCase):
@@ -64,3 +64,14 @@ class AssetsTest(TestCase):
         )
         self.assertEqual(stock.value, transaction1.value)
         self.assertEqual(stock.total_value, stock.quantity * stock.value)
+
+    def test_initial_cash_asset_created(self):
+        assets = Asset.objects.filter(portfolio=self.portfolio)
+        self.assertEqual(assets.count(), 1)
+        cash = assets.get(is_currency=True)
+        self.assertEqual(cash.value, self.league.start_value)
+
+    def test_initial_snapshot_created(self):
+        snapshots = Snapshot.objects.filter(portfolio=self.portfolio)
+        self.assertEqual(snapshots.count(), 1)
+        self.assertEqual(snapshots[0].value, self.league.start_value)
