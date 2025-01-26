@@ -35,7 +35,7 @@
             {% endfor %}
         </tbody>
     </table>
-    {% include './pagination.html' with page=leagues %}
+    {% include './pagination.html' with page=leagues page_query="leagues-page" %}
     {% else %}
     <p class="fst-italic fw-light">No leagues found.</p>
     {% endif %}

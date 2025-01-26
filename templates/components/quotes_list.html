@@ -31,6 +31,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include './pagination.html' with page=quotes page_query="quotes-page" %}
     {% else %}
     <p class="fst-italic fw-light">No quotes found.</p>
     {% endif %}

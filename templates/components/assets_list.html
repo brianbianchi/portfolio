@@ -19,7 +19,7 @@
                 <td>Cash / $USD</td>
                 <td> </td>
                 <td> </td>
-                <td>{{asset.value|intcomma}}</td>
+                <td>${{asset.value|intcomma}}</td>
                 {% else %}
                 <td>
                     <a href="{% url 'asset' ticker=asset.ticker %}">
@@ -34,6 +34,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include './pagination.html' with page=assets page_query="assets-page" %}
     {% else %}
     <p class="fst-italic fw-light">No assets found.</p>
     {% endif %}

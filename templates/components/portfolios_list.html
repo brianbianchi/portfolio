@@ -29,6 +29,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include './pagination.html' with page=portfolios page_query="portfolios-page" %}
     {% else %}
     <p class="fst-italic fw-light">No portfolios found.</p>
     {% endif %}

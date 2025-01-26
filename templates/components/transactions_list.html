@@ -40,6 +40,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include './pagination.html' with page=txns page_query="txns-page" %}
     {% else %}
     <p class="fst-italic fw-light">No transactions found.</p>
     {% endif %}

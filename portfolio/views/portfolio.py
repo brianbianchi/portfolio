@@ -1,8 +1,8 @@
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from ..forms import PortfolioForm
+from ..helper import paginate
 from ..models import Asset, League, Portfolio, Snapshot, Transaction
 
 
@@ -11,19 +11,19 @@ def view_portfolio(request, id):
         return HttpResponseNotAllowed
     try:
         portfolio = Portfolio.objects.get(id=id)
-        txns = Transaction.objects.filter(portfolio=portfolio)
-        assets = Asset.objects.filter(portfolio=portfolio)
+        txns = Transaction.objects.filter(portfolio=portfolio).order_by("value")
+        txns_page = request.GET.get("txns-page") or 1
+        txns_paged = paginate(txns, txns_page)
+        assets = Asset.objects.filter(portfolio=portfolio).order_by("total_value")
+        assets_page = request.GET.get("assets-page") or 1
+        assets_paged = paginate(assets, assets_page)
         snapshots = Snapshot.objects.all().order_by("created")
-        print(snapshots)
-
         dates = [snapshot.created.strftime("%Y-%m-%d") for snapshot in snapshots]
-        print(dates)
         values = [str(snapshot.value) for snapshot in snapshots]
-        print(values)
         context = {
             "portfolio": portfolio,
-            "txns": txns,
-            "assets": assets,
+            "txns": txns_paged,
+            "assets": assets_paged,
             "graph_dates": dates,
             "graph_values": values,
         }

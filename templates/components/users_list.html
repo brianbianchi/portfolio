@@ -19,6 +19,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include './pagination.html' with page=users page_query="users-page" %}
     {% else %}
     <p class="fst-italic fw-light">No users found.</p>
     {% endif %}
