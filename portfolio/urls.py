@@ -23,6 +23,5 @@ urlpatterns = [
     path("leagues/", league.view_leagues, name="view_leagues"),
     path("create_league/", league.create_league, name="create_league"),
     path("edit_league/<int:id>/", league.edit_league, name="edit_league"),
-    path("delete_league/<int:id>/", league.delete_league, name="delete_league"),
     path("invite/<int:league_id>/", league_user.invite, name="invite"),
 ]

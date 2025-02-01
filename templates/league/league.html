@@ -12,16 +12,17 @@
     </p>
 </div>
 
+{% if has_access %}
 <a href="{% url 'create_portfolio' league_id=league.id %}" class="btn btn-primary my-3" role="button">
     Create portfolio
 </a>
-
-{% if user == league.author %}
 <a href="{% url 'invite' league_id=league.id %}" class="btn btn-primary my-3" role="button">
     Invite user
 </a>
+{% endif %}
+
+{% if user == league.author %}
 <a href="{% url 'edit_league' id=league.id %}" class="btn btn-primary my-3" role="button">Edit</a>
-<a href="{% url 'delete_league' id=league.id %}" class="btn btn-danger my-3" role="button">Delete</a>
 {% endif %}
 
 {% include '../components/portfolios_list.html' with portfolios=portfolios %}

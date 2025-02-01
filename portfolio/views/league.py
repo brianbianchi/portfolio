@@ -19,10 +19,12 @@ def view_league(request, id):
         users = User.objects.filter(id__in=league_users).order_by("username")
         users_page = request.GET.get("users-page") or 1
         users_paged = paginate(users, users_page)
+        has_access = request.user in users
         context = {
             "league": league,
             "portfolios": portfolios_paged,
             "users": users_paged,
+            "has_access": has_access,
         }
         return render(request, "league/league.html", context)
     except:
@@ -66,12 +68,3 @@ def edit_league(request, id):
             return redirect(f"/league/{league.id}")
     form = LeagueForm(instance=league)
     return render(request, "league/edit_league.html", {"form": form})
-
-
-@login_required(login_url="/login")
-def delete_league(request, id):
-    league = League.objects.get(id=id)
-    if request.user != league.author:
-        return HttpResponseForbidden
-    league.delete()
-    return redirect(f"/user/{request.user.username}")
