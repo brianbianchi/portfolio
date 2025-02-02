@@ -29,9 +29,9 @@ SECRET_KEY = os.getenv("SECRET_KEY") or "TESTSECRETKEY"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "8r1.dev"]
-
-CSRF_TRUSTED_ORIGINS = ["https://8r1.dev"]
+domain = os.getenv("DOMAIN_NAME")
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", domain]
+CSRF_TRUSTED_ORIGINS = [f"https://{domain}"]
 
 # Application definition
 
