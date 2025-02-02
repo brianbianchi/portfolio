@@ -6,18 +6,31 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data/
-    env_file:
-      - .env
+    env_file: .env
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${SERVER_HOST}
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - ${SERVER_PORT}:${SERVER_PORT}
     depends_on:
       - db
-    env_file:
-      - .env
+    env_file: .env
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: ${NGINX_HOST}
+    env_file: .env
+    volumes:
+      - ./start.sh:/start.sh
+    entrypoint: /bin/sh /start.sh
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
 
 volumes:
   pgdata:
