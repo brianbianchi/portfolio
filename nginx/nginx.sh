@@ -6,7 +6,7 @@ apt install nginx certbot python3-certbot-nginx
 
 # Firewall
 ufw allow 'Nginx Full'
-ufw delete allow 'Nginx HTTP'
+ufw allow 'Nginx HTTPS'
 ufw reload
 
 systemctl enable nginx
@@ -20,6 +20,6 @@ nginx -t
 
 systemctl restart nginx
 
-certbot --nginx -d fintasy.io -d www.fintasy.io
+certbot --nginx -d fintasy.io
 
 systemctl status certbot.timer
