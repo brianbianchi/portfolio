@@ -17,7 +17,7 @@ def search(request):
     users = User.objects.filter(username__icontains=query).order_by("username")
     users_page = request.GET.get("users-page") or 1
     users_paged = paginate(users, users_page)
-    leagues = League.objects.filter(name__icontains=query).order_by("num_users")
+    leagues = League.objects.filter(name__icontains=query).order_by("-num_users")
     leagues_page = request.GET.get("leagues-page") or 1
     leagues_paged = paginate(leagues, leagues_page)
     context = {"users": users_paged, "leagues": leagues_paged, "quotes": quotes}

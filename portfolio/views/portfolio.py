@@ -11,10 +11,10 @@ def view_portfolio(request, id):
         return HttpResponseNotAllowed
     try:
         portfolio = Portfolio.objects.get(id=id)
-        txns = Transaction.objects.filter(portfolio=portfolio).order_by("value")
+        txns = Transaction.objects.filter(portfolio=portfolio).order_by("created")
         txns_page = request.GET.get("txns-page") or 1
         txns_paged = paginate(txns, txns_page)
-        assets = Asset.objects.filter(portfolio=portfolio).order_by("total_value")
+        assets = Asset.objects.filter(portfolio=portfolio).order_by("-total_value")
         assets_page = request.GET.get("assets-page") or 1
         assets_paged = paginate(assets, assets_page)
         snapshots = Snapshot.objects.all().order_by("created")

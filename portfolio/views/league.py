@@ -34,7 +34,7 @@ def view_league(request, id):
 def view_leagues(request):
     if request.method != "GET":
         return HttpResponseNotAllowed("This method is not allowed.")
-    leagues = League.objects.all().order_by("num_users")
+    leagues = League.objects.all().order_by("-num_users")
     leagues_page = request.GET.get("leagues-page") or 1
     leagues_paged = paginate(leagues, leagues_page)
     return render(request, "league/leagues.html", {"leagues": leagues_paged})

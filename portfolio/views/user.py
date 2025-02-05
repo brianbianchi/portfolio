@@ -23,7 +23,7 @@ def user(request, name):
     try:
         user = User.objects.get_by_natural_key(username=name)
         league_users = LeagueUser.objects.filter(user=user).values("league")
-        leagues = League.objects.filter(id__in=league_users).order_by("num_users")
+        leagues = League.objects.filter(id__in=league_users).order_by("-num_users")
         leagues_page = request.GET.get("leagues-page") or 1
         leagues_paged = paginate(leagues, leagues_page)
         portfolios = Portfolio.objects.filter(user=user).order_by("value")
