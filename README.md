@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt=" logo" src="/static/images/icon.png" width="50%" height="50%">
+    <img alt=" logo" src="/static/images/icon.png" width="25%">
     <h1> &dollar; Fantasy finance </h1>
 </div>
 
