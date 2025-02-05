@@ -1,4 +1,7 @@
-<h1 align="center"> Fantasy finance &dollar; </h1>
+<div align="center">
+    <img alt=" logo" src="/static/images/icon.png" width="50%" height="50%">
+    <h1> &dollar; Fantasy finance </h1>
+</div>
 
 ## Local setup
 ```console
