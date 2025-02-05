@@ -1,7 +1,24 @@
 from decimal import Decimal
+from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Asset, League, LeagueUser, Portfolio, Snapshot, Transaction
+
+
+@receiver(post_save, sender=User)
+def user_post_save(sender, instance, created, **kwargs):
+    if created:
+        try:
+            if User.objects.count() == 1:
+                return
+            league = League.objects.order_by("created").first()
+            league_user = LeagueUser()
+            league_user.user = instance
+            league_user.league = league
+            league_user.save()
+        except Exception as ex:
+            print(ex)
+            pass
 
 
 @receiver(post_save, sender=League)

@@ -2,14 +2,21 @@ from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth.models import User
 from ..forms import LeagueUserForm
-from ..models import League, Portfolio
+from ..models import League, LeagueUser, Portfolio
 
 
-class TransactionFormTest(TestCase):
+class InviteTest(TestCase):
 
     def setUp(self):
         self.user1 = User(username="exampleuser1", email="exampleuser1@gmail.com")
         self.user1.save()
+        self.general_league = League(
+            name="General",
+            description="Site-wide League",
+            start_value=1000,
+            author=self.user1,
+        )
+        self.general_league.save()
         self.user2 = User(username="exampleuser2", email="exampleuser2@gmail.com")
         self.user2.save()
         self.league = League(
@@ -54,3 +61,10 @@ class TransactionFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue(form.has_error("league"))
         self.assertIn("Select a valid choice", form.errors["league"][0])
+
+    def test_invited_when_user_registers(self):
+        user = User(username="exampleuser3", email="exampleuser3@gmail.com")
+        user.save()
+        league_users = LeagueUser.objects.filter(league=self.general_league, user=user)
+        
+        self.assertEqual(league_users.count(), 1)
