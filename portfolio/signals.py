@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from .models import Asset, League, LeagueUser, Portfolio, Snapshot, Transaction
 
@@ -38,9 +38,19 @@ def league_user_post_save(sender, instance, created, **kwargs):
         league.save()
 
 
+@receiver(post_delete, sender=LeagueUser)
+def league_user_deleted(sender, instance, **kwargs):
+    league = instance.league
+    league.num_users -= 1
+    league.save()
+
+
 @receiver(post_save, sender=Portfolio)
 def portfolio_post_save(sender, instance, created, **kwargs):
     if created:
+        league = instance.league
+        league.num_portfolios += 1
+        league.save()
         asset = Asset()
         asset.is_currency = True
         asset.ticker = ""
@@ -52,6 +62,13 @@ def portfolio_post_save(sender, instance, created, **kwargs):
         snapshot.portfolio = instance
         snapshot.value = instance.league.start_value
         snapshot.save()
+
+
+@receiver(post_delete, sender=Portfolio)
+def portfolio_deleted(sender, instance, **kwargs):
+    league = instance.league
+    league.num_portfolios -= 1
+    league.save()
 
 
 @receiver(post_save, sender=Transaction)

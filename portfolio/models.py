@@ -8,6 +8,7 @@ class League(models.Model):
     start_value = models.DecimalField(decimal_places=0, max_digits=200)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+    num_portfolios = models.IntegerField(default=0)
     num_users = models.IntegerField(default=0)
 
     def __str__(self):
@@ -33,11 +34,15 @@ class Portfolio(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    value = models.DecimalField(decimal_places=2, max_digits=200)
+    created = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs):
-        self.value = self.league.start_value
-        super().save(*args, **kwargs)
+    @property
+    def value(self):
+        try:
+            snapshots = Snapshot.objects.filter(portfolio=self.id)
+            return snapshots.order_by('-created').first().value
+        except:
+            return self.league.start_value
 
     def __str__(self):
         return f"{self.name}"
@@ -58,13 +63,12 @@ class Asset(models.Model):
     ticker = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
     quantity = models.IntegerField()
-    total_value = models.DecimalField(
-        decimal_places=2, max_digits=200, blank=True, null=True
-    )
 
-    def save(self, *args, **kwargs):
-        self.total_value = self.value * self.quantity
-        super().save(*args, **kwargs)
+    @property
+    def total_value(self):
+        if self.is_currency:
+            return self.value
+        return self.value * self.quantity
 
     def __str__(self):
         return f"{self.portfolio.name} has {self.quantity} {self.ticker}"
@@ -77,13 +81,10 @@ class Transaction(models.Model):
     value = models.DecimalField(decimal_places=2, max_digits=200)
     quantity = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
-    total_value = models.DecimalField(
-        decimal_places=2, max_digits=200, blank=True, null=True
-    )
 
-    def save(self, *args, **kwargs):
-        self.total_value = self.value * self.quantity
-        super().save(*args, **kwargs)
+    @property
+    def total_value(self):
+        return self.value * self.quantity
 
     def __str__(self):
         return f"{self.portfolio.name} bought {self.quantity} {self.ticker}"

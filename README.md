@@ -20,16 +20,25 @@ classDiagram
     }
     class League {
         +User author
+        +Decimal start_value
         +String name
+        +String description
+        +int num_portfolios
+        +int num_users
+        +Datetime created
     }
     note for LeagueUser "Determines invite permissions"
+    note for LeagueUser "Allows for Portfolio creation"
     class LeagueUser {
         +User user
         +League league
+        +Datetime created
     }
     class Portfolio {
         +League league
         +User User
+        +String name
+        +Datetime created
     }
     note for Snapshot "Calculated portfolio value"
     class Snapshot {
@@ -50,6 +59,7 @@ classDiagram
         +int quantity
         +Decimal value
         +bool is_purchase
+        +Datetime created
     }
     User ..> League
     User ..> LeagueUser

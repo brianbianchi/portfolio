@@ -9,6 +9,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Start value</th>
+                <th scope="col">Portfolios</th>
                 <th scope="col">Users</th>
                 <th scope="col">Author</th>
                 <th scope="col">Created</th>
@@ -24,6 +25,7 @@
                 </td>
                 <td>{{league.description}}</td>
                 <td>{{league.start_value|intcomma}}</td>
+                <td>{{league.num_portfolios}}</td>
                 <td>{{league.num_users}}</td>
                 <td>
                     <a href="{% url 'user' name=league.author.username %}">

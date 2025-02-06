@@ -26,7 +26,7 @@ def user(request, name):
         leagues = League.objects.filter(id__in=league_users).order_by("-num_users")
         leagues_page = request.GET.get("leagues-page") or 1
         leagues_paged = paginate(leagues, leagues_page)
-        portfolios = Portfolio.objects.filter(user=user).order_by("value")
+        portfolios = Portfolio.objects.filter(user=user).order_by("-created")
         portfolios_page = request.GET.get("portfolios-page") or 1
         portfolios_paged = paginate(portfolios, portfolios_page)
         context = {
