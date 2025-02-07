@@ -5,10 +5,19 @@
 {% block content %}
 <h1>Search</h1>
 
-{% include '../components/quotes_list.html' with quotes=quotes %}
+<div class="my-3">
+    <h2>Quotes</h2>
+    {% include '../components/quotes_list.html' with quotes=quotes %}
+</div>
 
-{% include '../components/users_list.html' with users=users %}
+<div class="my-3">
+    <h2>Users</h2>
+    {% include '../components/users_list.html' with users=users %}
+</div>
 
-{% include '../components/leagues_list.html' with leagues=leagues %}
+<div class="my-3">
+    <h2>Leagues</h2>
+    {% include '../components/leagues_list.html' with leagues=leagues %}
+</div>
 
 {% endblock %}

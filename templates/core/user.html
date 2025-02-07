@@ -9,7 +9,13 @@
     <p class="mb-2">Joined {{user.date_joined|naturalday}}</p>
 </div>
 
-{% include '../components/portfolios_list.html' with portfolios=portfolios %}
+<div class="my-3">
+    <h2>Portfolios</h2>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+</div>
 
-{% include '../components/leagues_list.html' with leagues=leagues %}
+<div class="my-3">
+    <h2>Leagues</h2>
+    {% include '../components/leagues_list.html' with leagues=leagues %}
+</div>
 {% endblock %}

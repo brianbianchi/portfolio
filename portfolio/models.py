@@ -35,14 +35,7 @@ class Portfolio(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
-
-    @property
-    def value(self):
-        try:
-            snapshots = Snapshot.objects.filter(portfolio=self.id)
-            return snapshots.order_by('-created').first().value
-        except:
-            return self.league.start_value
+    value = models.DecimalField(decimal_places=2, max_digits=200)
 
     def __str__(self):
         return f"{self.name}"

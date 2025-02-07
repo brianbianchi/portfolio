@@ -31,3 +31,5 @@ class Command(BaseCommand):
             snapshot.portfolio = portfolio
             snapshot.value = total_value
             snapshot.save()
+            portfolio.value = total_value
+            portfolio.save()

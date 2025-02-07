@@ -25,8 +25,14 @@
 <a href="{% url 'edit_league' id=league.id %}" class="btn btn-primary my-3" role="button">Edit</a>
 {% endif %}
 
-{% include '../components/portfolios_list.html' with portfolios=portfolios %}
+<div class="my-3">
+    <h2>Portfolios</h2>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+</div>
 
-{% include '../components/users_list.html' with users=users %}
+<div class="my-3">
+    <h2>Users</h2>
+    {% include '../components/users_list.html' with users=users %}
+</div>
 
 {% endblock %}

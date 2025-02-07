@@ -3,11 +3,13 @@ from django.db.models import Q
 from django.shortcuts import render
 import yfinance as yf
 from ..helper import paginate
-from ..models import League
+from ..models import League, Portfolio
 
 
 def home(request):
-    return render(request, "core/home.html")
+    league = League.objects.order_by("created").first()
+    portfolios = Portfolio.objects.filter(league=league).order_by("-value")[:5]
+    return render(request, "core/home.html", {"portfolios": portfolios})
 
 
 def search(request):

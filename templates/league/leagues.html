@@ -8,5 +8,8 @@
 </a>
 {% endif %}
 
-{% include '../components/leagues_list.html' with leagues=leagues %}
+<div class="my-3">
+    <h2>Leagues</h2>
+    {% include '../components/leagues_list.html' with leagues=leagues %}
+</div>
 {% endblock %}

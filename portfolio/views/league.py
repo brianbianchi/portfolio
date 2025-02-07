@@ -12,7 +12,7 @@ def view_league(request, id):
         return HttpResponseNotAllowed("This method is not allowed.")
     try:
         league = League.objects.get(id=id)
-        portfolios = Portfolio.objects.filter(league=league).order_by("-created")
+        portfolios = Portfolio.objects.filter(league=league).order_by("-value")
         portfolios_page = request.GET.get("portfolios-page") or 1
         portfolios_paged = paginate(portfolios, portfolios_page)
         league_users = LeagueUser.objects.filter(league=league).values("user")

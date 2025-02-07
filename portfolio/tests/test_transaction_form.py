@@ -19,7 +19,10 @@ class TransactionFormTest(TestCase):
         )
         self.league.save()
         self.portfolio = Portfolio(
-            name="Test Portfolio", user=self.user, league=self.league
+            name="Test Portfolio",
+            user=self.user,
+            league=self.league,
+            value=self.league.start_value,
         )
         self.portfolio.save()
         self.transaction1 = Transaction(

@@ -45,9 +45,15 @@
 </div>
 {% endif %}
 
-{% include '../components/assets_list.html' with assets=assets %}
+<div class="my-3">
+    <h2>Assets</h2>
+    {% include '../components/assets_list.html' with assets=assets %}
+</div>
 
-{% include '../components/transactions_list.html' with txns=txns %}
+<div class="my-3">
+    <h2>Transactions</h2>
+    {% include '../components/transactions_list.html' with txns=txns %}
+</div>
 
 <div class="my-3">
     <h2>Portfolio value</h2>

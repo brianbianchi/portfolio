@@ -27,7 +27,10 @@ class InviteTest(TestCase):
         )
         self.league.save()
         self.portfolio = Portfolio(
-            name="Test Portfolio", user=self.user1, league=self.league
+            name="Test Portfolio",
+            user=self.user1,
+            league=self.league,
+            value=self.league.start_value,
         )
         self.portfolio.save()
 
@@ -66,5 +69,5 @@ class InviteTest(TestCase):
         user = User(username="exampleuser3", email="exampleuser3@gmail.com")
         user.save()
         league_users = LeagueUser.objects.filter(league=self.general_league, user=user)
-        
+
         self.assertEqual(league_users.count(), 1)

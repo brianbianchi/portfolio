@@ -41,6 +41,7 @@ def create_portfolio(request, league_id):
         if form.is_valid():
             portfolio = form.save(commit=False)
             portfolio.user = request.user
+            portfolio.value = portfolio.league.start_value
             portfolio.save()
             return redirect(f"/portfolio/{portfolio.id}")
     else:

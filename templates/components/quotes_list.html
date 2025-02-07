@@ -1,38 +1,35 @@
 {% load humanize %}
 
-<div class="my-3">
-    <h2>Quotes</h2>
-    {% if quotes %}
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Exchange</th>
-                <th scope="col">Symbol</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for quote in quotes %}
-            <tr>
-                <td>
-                    <a href="{% url 'asset' ticker=quote.symbol %}">
-                        {{quote.shortname}}
-                    </a>
-                </td>
-                <td>
-                    {{quote.exchange}}
-                </td>
-                <td>
-                    <a href="{% url 'asset' ticker=quote.symbol %}">
-                        {{quote.symbol}}
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include './pagination.html' with page=quotes page_query="quotes-page" %}
-    {% else %}
-    <p class="fst-italic fw-light">No quotes found.</p>
-    {% endif %}
-</div>
+{% if quotes %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Exchange</th>
+            <th scope="col">Symbol</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for quote in quotes %}
+        <tr>
+            <td>
+                <a href="{% url 'asset' ticker=quote.symbol %}">
+                    {{quote.shortname}}
+                </a>
+            </td>
+            <td>
+                {{quote.exchange}}
+            </td>
+            <td>
+                <a href="{% url 'asset' ticker=quote.symbol %}">
+                    {{quote.symbol}}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% include './pagination.html' with page=quotes page_query="quotes-page" %}
+{% else %}
+<p class="fst-italic fw-light">No quotes found.</p>
+{% endif %}
