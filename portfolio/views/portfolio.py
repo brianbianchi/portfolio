@@ -17,7 +17,7 @@ def view_portfolio(request, id):
         assets = Asset.objects.filter(portfolio=portfolio).order_by("-value")
         assets_page = request.GET.get("assets-page") or 1
         assets_paged = paginate(assets, assets_page)
-        snapshots = Snapshot.objects.all().order_by("created")
+        snapshots = Snapshot.objects.filter(portfolio=portfolio).order_by("created")
         dates = [snapshot.created.strftime("%Y-%m-%d") for snapshot in snapshots]
         values = [str(snapshot.value) for snapshot in snapshots]
         context = {
