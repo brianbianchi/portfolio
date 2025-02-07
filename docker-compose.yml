@@ -1,0 +1,24 @@
+services:
+  db:
+    restart: always
+    image: postgres:latest
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    env_file: .env
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${SERVER_HOST}
+    volumes:
+      - .:/code
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      - db
+    env_file: .env
+
+volumes:
+  pgdata:

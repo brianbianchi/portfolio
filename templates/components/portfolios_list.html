@@ -1,0 +1,33 @@
+{% load humanize %}
+
+{% if portfolios %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">League</th>
+            <th scope="col">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for portfolio in portfolios %}
+        <tr>
+            <td>
+                <a href="{% url 'view_portfolio' id=portfolio.id %}">
+                    {{portfolio.name}}
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'view_league' id=portfolio.league.id %}">
+                    {{portfolio.league.name}}
+                </a>
+            </td>
+            <td>{{portfolio.value|intcomma}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% include './pagination.html' with page=portfolios page_query="portfolios-page" %}
+{% else %}
+<p class="fst-italic fw-light">No portfolios found.</p>
+{% endif %}

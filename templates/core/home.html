@@ -1,0 +1,145 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block title %}home{% endblock %}
+{% block content %}
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{% static 'images/home.png' %}" class="img-fluid border rounded-3 shadow-lg mb-4"
+                alt="Example stock value chart" width="800" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Fantasy finance</h1>
+            <p class="lead">Compete to make the best returns in the market.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{% url 'view_leagues' %}" role="button" class="btn btn-primary btn-lg px-4 me-md-2">
+                    Join a league
+                </a>
+                <a href="{% url 'create_league' %}" role="button" class="btn btn-outline-secondary btn-lg px-4">
+                    Create a league
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5" id="icon-grid">
+    <h2 class="pb-2 border-bottom">Features</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor"
+                class="bi bi-collection text-body-secondary flex-shrink-0 me-3" viewBox="0 0 16 16">
+                <path
+                    d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Leagues</h3>
+                <p>
+                    Users can create as many portfolios as they would like in their leagues.
+                </p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-person-add text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path
+                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                <path
+                    d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Invite users</h3>
+                <p>Users belonging to a league can invite other users to join.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor"
+                class="bi bi-briefcase text-body-secondary flex-shrink-0 me-3" viewBox="0 0 16 16">
+                <path
+                    d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Portfolios</h3>
+                <p>
+                    A portfolio contains assets that can be transacted.
+                </p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-graph-up-arrow text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Analytics</h3>
+                <p>We've added visuals to better understand trends.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-arrow-down-up text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Transactions</h3>
+                <p>Users can buy an sell assets for market price.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-cash-stack text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                <path
+                    d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Assets</h3>
+                <p>
+                    When a portfolio is created, the amount of starting cash is defined by the parent league.
+                </p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-arrow-clockwise text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                <path
+                    d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Value Updates</h3>
+                <p>Portfolio and asset values are updated once per day, after the market has closed.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                class="bi bi-upload text-body-secondary flex-shrink-0 me-3" width="1.75em" height="1.75em"
+                viewBox="0 0 16 16">
+                <path
+                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                <path
+                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
+            </svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Data</h3>
+                <p>The market value of assets come from Yahoo Finance.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+
+<div class="centered-div">
+    <h2 class="text-center">Top Portfolios</h2>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+{% load humanize %}
+{% block title %}Search{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Search</h1>
+
+<div class="my-3">
+    <h2>Quotes</h2>
+    {% include '../components/quotes_list.html' with quotes=quotes %}
+</div>
+
+<div class="my-3">
+    <h2>Users</h2>
+    {% include '../components/users_list.html' with users=users %}
+</div>
+
+<div class="my-3">
+    <h2>Leagues</h2>
+    {% include '../components/leagues_list.html' with leagues=leagues %}
+</div>
+
+{% endblock %}
