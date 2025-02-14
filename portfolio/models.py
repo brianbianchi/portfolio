@@ -37,6 +37,12 @@ class Portfolio(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     value = models.DecimalField(decimal_places=2, max_digits=200)
 
+    @property
+    def perc_change(self):
+        start_value = self.league.start_value
+        perc = ((self.value - start_value) / start_value) * 100
+        return round(perc, 2)
+
     def __str__(self):
         return f"{self.name}"
 

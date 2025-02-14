@@ -16,17 +16,16 @@ class RegisterForm(UserCreationForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ["ticker", "quantity", "portfolio", "is_purchase", "value"]
+        fields = ["ticker", "quantity", "portfolio", "value"]
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
+        self.request = kwargs.pop("request", None)
         ticker = kwargs.pop("ticker", None)
         default_portfolio = kwargs.pop("default_portfolio", None)
-        default_is_purchase = kwargs.pop("default_is_purchase", True)
         super().__init__(*args, **kwargs)
 
-        if user:
-            portfolios = Portfolio.objects.filter(user=user)
+        if self.request.user:
+            portfolios = Portfolio.objects.filter(user=self.request.user)
             self.fields["portfolio"].queryset = portfolios
         else:
             self.fields["portfolio"].queryset = Portfolio.objects.none()
@@ -40,12 +39,10 @@ class TransactionForm(forms.ModelForm):
         self.fields["value"].disabled = True
         self.fields["value"].required = False
         self.fields["value"].widget = forms.HiddenInput()
-        self.fields["is_purchase"].label = "Purchase?"
-        self.fields["is_purchase"].initial = default_is_purchase
 
     def clean(self):
         cleaned_data = super().clean()
-        is_purchase = self.cleaned_data.get("is_purchase")
+        is_purchase = "buy-btn" in self.request.POST
         portfolio = self.cleaned_data.get("portfolio")
         ticker = self.cleaned_data.get("ticker")
         quantity = self.cleaned_data.get("quantity")

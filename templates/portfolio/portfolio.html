@@ -6,6 +6,17 @@
 <div class="border-bottom mb-2">
     <h1>{{portfolio.name}}</h1>
     <h3 class="mb-2">
+        Value: ${{portfolio.value|intcomma}}
+        {% if portfolio.perc_change >= 0 %}
+        <small style="color: green;">
+            ({{portfolio.perc_change|intcomma}}%)
+        </small>
+        {% else %}
+        <small style="color: red;">
+            ({{portfolio.perc_change|intcomma}}%)
+        </small>
+        {% endif %}
+        <br>
         League: <a href="{% url 'view_league' id=portfolio.league.id %}">
             {{portfolio.league.name}}
         </a>

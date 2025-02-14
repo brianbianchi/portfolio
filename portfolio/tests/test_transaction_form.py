@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from django.http import HttpRequest
 from django.test import TestCase
 from django.contrib.auth.models import User
 import pandas as pd
@@ -49,6 +50,9 @@ class TransactionFormTest(TestCase):
             value=20.0,
         )
         transaction3.save()
+        self.request = HttpRequest()
+        self.request.user = self.user
+        self.request.POST = {"buy-btn": [""]}
 
     @patch("yfinance.Ticker.history")
     def test_form_buy_valid(self, mock_get_stock_price):
@@ -57,11 +61,10 @@ class TransactionFormTest(TestCase):
         form_data = {
             "quantity": 3,
             "portfolio": self.portfolio.id,
-            "is_purchase": True,
         }
         form = TransactionForm(
             data=form_data,
-            user=self.user,
+            request=self.request,
             ticker="aapl",
         )
 
@@ -77,11 +80,10 @@ class TransactionFormTest(TestCase):
         form_data = {
             "quantity": 10,
             "portfolio": self.portfolio.id,
-            "is_purchase": True,
         }
         form = TransactionForm(
             data=form_data,
-            user=self.user,
+            request=self.request,
             ticker="aapl",
         )
 
@@ -92,16 +94,16 @@ class TransactionFormTest(TestCase):
 
     @patch("yfinance.Ticker.history")
     def test_form_sell_valid(self, mock_get_stock_price):
-        mock_price = 150.25
+        mock_price = 1000.00
         mock_get_stock_price.return_value = pd.DataFrame({"Close": [mock_price]})
         form_data = {
             "quantity": 2,
             "portfolio": self.portfolio.id,
-            "is_purchase": False,
         }
+        self.request.POST = {"sell-btn": [""]}
         form = TransactionForm(
             data=form_data,
-            user=self.user,
+            request=self.request,
             ticker="aapl",
         )
         stock = Asset.objects.get(
@@ -113,16 +115,16 @@ class TransactionFormTest(TestCase):
 
     @patch("yfinance.Ticker.history")
     def test_form_sell_invalid(self, mock_get_stock_price):
-        mock_price = 150.25
+        mock_price = 1000.00
         mock_get_stock_price.return_value = pd.DataFrame({"Close": [mock_price]})
         form_data = {
             "quantity": 10,
             "portfolio": self.portfolio.id,
-            "is_purchase": False,
         }
+        self.request.POST = {"sell-btn": [""]}
         form = TransactionForm(
             data=form_data,
-            user=self.user,
+            request=self.request,
             ticker="aapl",
         )
 
