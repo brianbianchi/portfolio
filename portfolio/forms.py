@@ -24,7 +24,7 @@ class TransactionForm(forms.ModelForm):
         default_portfolio = kwargs.pop("default_portfolio", None)
         super().__init__(*args, **kwargs)
 
-        if self.request.user:
+        if self.request.user.is_authenticated:
             portfolios = Portfolio.objects.filter(user=self.request.user)
             self.fields["portfolio"].queryset = portfolios
         else:

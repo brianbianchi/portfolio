@@ -5,6 +5,7 @@ urlpatterns = [
     path("", core.home, name="home"),
     path("search", core.search, name="search"),
     path("register", user.register, name="register"),
+    path("logout", user.logout_view, name="logout"),
     path("user/<name>/", user.user, name="user"),
     path("asset/<ticker>/", asset.asset, name="asset"),
     path("portfolio/<int:id>/", portfolio.view_portfolio, name="view_portfolio"),

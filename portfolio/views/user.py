@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from ..helper import paginate
@@ -17,6 +17,11 @@ def register(request):
         form = RegisterForm()
 
     return render(request, "registration/register.html", {"form": form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
 
 
 def user(request, name):

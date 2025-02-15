@@ -7,7 +7,7 @@ from ..models import Portfolio
 def asset(request, ticker):
     try:
         portfolios = None
-        if request.user:
+        if request.user.is_authenticated:
             portfolios = Portfolio.objects.filter(user=request.user.id)
         asset = yf.Ticker(ticker)
         current_price = asset.history(period="1d")["Close"].iloc[0]
