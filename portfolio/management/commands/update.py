@@ -13,6 +13,8 @@ class Command(BaseCommand):
         portfolios = Portfolio.objects.all()
         for portfolio in portfolios:
             assets = Asset.objects.filter(portfolio=portfolio)
+            if not assets:
+                continue
             total_value = Decimal(0)
             for asset in assets:
                 if asset.is_currency:

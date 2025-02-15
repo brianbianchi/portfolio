@@ -7,7 +7,8 @@
             <th scope="col">Ticker</th>
             <th scope="col">Quantity</th>
             <th scope="col">Value</th>
-            <th scope="col">Total value</th>
+            <th scope="col">Value per item</th>
+            <th scope="col">Created</th>
         </tr>
     </thead>
     <tbody>
@@ -21,19 +22,20 @@
             <td>{{txn.quantity}}</td>
             {% if txn.is_purchase %}
             <td style="color: green;">
-                ${{txn.value|intcomma}}
+                ${{txn.total_value|intcomma}}
             </td>
             <td style="color: green;">
-                ${{txn.total_value|intcomma}}
+                ${{txn.value|intcomma}}
             </td>
             {% else %}
             <td style="color: red;">
-                ${{txn.value|intcomma}}
-            </td>
-            <td style="color: red;">
                 ${{txn.total_value|intcomma}}
             </td>
+            <td style="color: red;">
+                ${{txn.value|intcomma}}
+            </td>
             {% endif %}
+            <td>{{txn.created|naturalday}}</td>
         </tr>
         {% endfor %}
     </tbody>
