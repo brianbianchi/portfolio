@@ -2,6 +2,7 @@ from unittest.mock import patch
 from django.http import HttpRequest
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.management import call_command
 import pandas as pd
 from ..forms import TransactionForm
 from ..models import Asset, League, Portfolio, Transaction
@@ -10,6 +11,8 @@ from ..models import Asset, League, Portfolio, Transaction
 class TransactionFormTest(TestCase):
 
     def setUp(self):
+        self.superuser = User.objects.create_superuser(username="admin")
+        call_command("init")
         self.user = User(username="exampleuser", email="exampleuser@gmail.com")
         self.user.save()
         self.league = League(

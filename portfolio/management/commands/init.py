@@ -7,11 +7,12 @@ class Command(BaseCommand):
     help = "Initializes data"
 
     def handle(self, *args, **kwargs):
-        user = User.objects.first()
+        user = User.objects.filter(is_superuser=True).first()
         general_league = League(
             name="General",
             description="Site-wide league",
             start_value=100000,
             author=user,
+            is_default=True,
         )
         general_league.save()

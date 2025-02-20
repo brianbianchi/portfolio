@@ -27,11 +27,13 @@ class TransactionForm(forms.ModelForm):
         if self.request.user.is_authenticated:
             portfolios = Portfolio.objects.filter(user=self.request.user)
             self.fields["portfolio"].queryset = portfolios
+            if default_portfolio:
+                self.fields["portfolio"].initial = default_portfolio
+            else:
+                initial = portfolios.first() if portfolios.count() > 0 else None
+                self.fields["portfolio"].initial = initial
         else:
             self.fields["portfolio"].queryset = Portfolio.objects.none()
-
-        if default_portfolio:
-            self.fields["portfolio"].initial = default_portfolio
 
         self.fields["ticker"].initial = ticker
         self.fields["ticker"].disabled = True
@@ -96,11 +98,16 @@ class PortfolioForm(forms.ModelForm):
             league_users = LeagueUser.objects.filter(user=user).values("league")
             leagues = League.objects.filter(id__in=league_users)
             self.fields["league"].queryset = leagues
+            if default_league:
+                self.fields["league"].initial = default_league
+            else:
+                initial = leagues.first() if leagues.count() > 0 else None
+                self.fields["league"].initial = initial
         else:
             self.fields["league"].queryset = League.objects.none()
 
-        if default_league:
-            self.fields["league"].initial = default_league
+        if self.instance.pk:
+            self.fields["league"].disabled = True
 
 
 class LeagueUserForm(forms.ModelForm):
@@ -117,13 +124,17 @@ class LeagueUserForm(forms.ModelForm):
 
         if user:
             league_users = LeagueUser.objects.filter(user=user).values("league")
-            leagues = League.objects.filter(id__in=league_users)
+            leagues = League.objects.filter(id__in=league_users).exclude(
+                is_default=True
+            )
             self.fields["league"].queryset = leagues
+            if default_league:
+                self.fields["league"].initial = default_league
+            else:
+                initial = leagues.first() if leagues.count() > 0 else None
+                self.fields["league"].initial = initial
         else:
             self.fields["league"].queryset = League.objects.none()
-
-        if default_league:
-            self.fields["league"].initial = default_league
 
     def clean_username(self):
         username = self.cleaned_data.get("username")

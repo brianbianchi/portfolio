@@ -8,17 +8,19 @@ from .models import Asset, League, LeagueUser, Portfolio, Snapshot, Transaction
 @receiver(post_save, sender=User)
 def user_post_save(sender, instance, created, **kwargs):
     if created:
-        try:
-            if User.objects.count() == 1:
-                return
-            league = League.objects.order_by("created").first()
-            league_user = LeagueUser()
-            league_user.user = instance
-            league_user.league = league
-            league_user.save()
-        except Exception as ex:
-            print(ex)
-            pass
+        league = League.objects.filter(is_default=True).first()
+        if not league:
+            return
+        league_user = LeagueUser()
+        league_user.user = instance
+        league_user.league = league
+        league_user.save()
+        portfolio = Portfolio()
+        portfolio.user = instance
+        portfolio.league = league
+        portfolio.value = league.start_value
+        portfolio.name = instance.username
+        portfolio.save()
 
 
 @receiver(post_save, sender=League)

@@ -1,12 +1,15 @@
 from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from ..models import Asset, League, Portfolio, Snapshot, Transaction
 
 
 class AssetsTest(TestCase):
 
     def setUp(self):
+        self.superuser = User.objects.create_superuser(username="admin")
+        call_command("init")
         self.user = User(username="exampleuser", email="exampleuser@gmail.com")
         self.user.save()
         self.league = League(

@@ -1,6 +1,7 @@
 from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from ..forms import LeagueUserForm
 from ..models import League, LeagueUser, Portfolio
 
@@ -8,15 +9,11 @@ from ..models import League, LeagueUser, Portfolio
 class InviteTest(TestCase):
 
     def setUp(self):
+        self.superuser = User.objects.create_superuser(username="admin")
+        call_command("init")
+        self.default_league = League.objects.get(is_default=True)
         self.user1 = User(username="exampleuser1", email="exampleuser1@gmail.com")
         self.user1.save()
-        self.general_league = League(
-            name="General",
-            description="Site-wide League",
-            start_value=1000,
-            author=self.user1,
-        )
-        self.general_league.save()
         self.user2 = User(username="exampleuser2", email="exampleuser2@gmail.com")
         self.user2.save()
         self.league = League(
@@ -65,9 +62,13 @@ class InviteTest(TestCase):
         self.assertTrue(form.has_error("league"))
         self.assertIn("Select a valid choice", form.errors["league"][0])
 
-    def test_invited_when_user_registers(self):
+    def test_new_user(self):
         user = User(username="exampleuser3", email="exampleuser3@gmail.com")
         user.save()
-        league_users = LeagueUser.objects.filter(league=self.general_league, user=user)
+        league_users = LeagueUser.objects.filter(league=self.default_league, user=user)
+        portfolios = Portfolio.objects.filter(league=self.default_league, user=user)
 
         self.assertEqual(league_users.count(), 1)
+        self.assertEqual(portfolios.count(), 1)
+        self.assertEqual(portfolios.first().name, user.username)
+        self.assertEqual(portfolios.first().value, self.default_league.start_value)

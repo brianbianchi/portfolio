@@ -8,6 +8,7 @@ class League(models.Model):
     start_value = models.DecimalField(decimal_places=0, max_digits=200)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+    is_default = models.BooleanField(default=False)
     num_portfolios = models.IntegerField(default=0)
     num_users = models.IntegerField(default=0)
 
