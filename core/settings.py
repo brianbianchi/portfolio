@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY") or "TESTSECRETKEY"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-domain = os.getenv("DOMAIN_NAME")
+domain = os.getenv("DOMAIN_NAME").removeprefix("https://")
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", domain]
 CSRF_TRUSTED_ORIGINS = [f"https://{domain}"]
 
