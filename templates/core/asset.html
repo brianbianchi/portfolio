@@ -4,6 +4,17 @@
 {% block content %}
 <h2><a href="https://finance.yahoo.com/quote/{{info.symbol}}">{{info.symbol}}</a></h2>
 <small>{{info.longName}}</small>
+{% if user.is_authenticated %}
+{% if is_following %}
+<button id="follow-btn" class="btn btn-danger" data-ticker="{{ ticker }}">
+    Unfollow
+</button>
+{% else %}
+<button id="follow-btn" class="btn btn-primary" data-ticker="{{ ticker }}">
+    Follow
+</button>
+{% endif %}
+{% endif %}
 <hr>
 
 <div class="container">
@@ -56,4 +67,36 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const followButton = document.getElementById('follow-btn');
+        const ticker = followButton.getAttribute('data-ticker');
+        followButton.addEventListener('click', function () {
+            fetch(`/follow/${ticker}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.action === 'followed') {
+                        followButton.textContent = 'Unfollow';
+                        followButton.classList.remove('btn-primary');
+                        followButton.classList.add('btn-danger');
+                    } else if (data.action === 'unfollowed') {
+                        followButton.textContent = 'Follow';
+                        followButton.classList.remove('btn-danger');
+                        followButton.classList.add('btn-primary');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
 {% endblock %}

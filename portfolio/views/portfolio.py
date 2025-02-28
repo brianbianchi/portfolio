@@ -33,6 +33,17 @@ def view_portfolio(request, id):
         return render(request, "shared/404.html")
 
 
+def leaderboard(request):
+    if request.method != "GET":
+        return HttpResponseNotAllowed("This method is not allowed.")
+    portfolios = Portfolio.objects.filter(league__is_default=True).order_by("-value")
+    protfolios_page = request.GET.get("portfolios-page") or 1
+    protfolios_paged = paginate(portfolios, protfolios_page)
+    return render(
+        request, "portfolio/leaderboard.html", {"portfolios": protfolios_paged}
+    )
+
+
 @login_required(login_url="/login")
 def create_portfolio(request, league_id):
     league = League.objects.get(id=league_id)

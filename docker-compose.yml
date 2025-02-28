@@ -3,7 +3,7 @@ services:
     restart: always
     image: postgres:latest
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data/
     env_file: .env
@@ -11,11 +11,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${SERVER_HOST}
     volumes:
       - .:/code
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - "8000:8000"
     depends_on:
       - db
     env_file: .env

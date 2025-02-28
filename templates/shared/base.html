@@ -2,83 +2,163 @@
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="{% static 'images/icon.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Fintasy | {% block title %}{% endblock %}</title>
+    <style>
+      body {
+        font-family: "Fira Code", serif;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="{% static 'images/icon.png' %}" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Fintasy | {% block title %}{% endblock %}</title>
-</head>
-
-<body>
-  <header class="p-3 text-bg-dark bg-dark border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img src="{% static 'images/icon.png' %}" class="bi me-2" width="40" aria-label="logo" />
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container container-fluid">
+        <a
+          href="/"
+          class="navbar-brand align-items-center text-decoration-none"
+        >
+          <img
+            src="{% static 'images/icon.png' %}"
+            class="bi me-2"
+            width="40"
+            aria-label="logo"
+          />
         </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form
+            method="get"
+            action="{% url 'search' %}"
+            class="d-flex"
+            role="search"
+            onsubmit="addQueryParam(event)"
+          >
+            <input
+              class="form-control me-2"
+              style="width: 510px"
+              type="search"
+              placeholder="&#128269; Search stocks, crypto, users, portfolios, etc."
+              aria-label="Search"
+              id="search-input"
+              name="q"
+            />
+            <button class="btn btn-outline-primary" type="submit" hidden>
+              Search
+            </button>
+          </form>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="/leagues" class="nav-link px-2 text-white">Leagues</a></li>
-          {% if user.is_authenticated %}
-          <li><a href="/user/{{user.username}}" class="nav-link px-2 text-white">Profile</a></li>
-          {% endif %}
-        </ul>
-
-        <form method="get" action="{% url 'search' %}" class="d-flex" role="search" onsubmit="addQueryParam(event)">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input"
-            name="q">
-          <button class="btn btn-outline-primary" type="submit" hidden>Search</button>
-        </form>
-
-        <div class="text-end">
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/leaderboard">Leaderboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'popular_assets' %}"
+                >Assets</a
+              >
+            </li>
             {% if user.is_authenticated %}
-            <span class="navbar-text text-white px-2">Logged in as {{user.username}} | </span>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/user/{{user.username}}"
+                >{{user.username}}</a
+              >
+            </li>
             {% if user.is_superuser %}
-            <li><a href="/admin" class="nav-link px-2 text-white">Admin</a></li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/admin">Admin</a>
+            </li>
             {% endif %}
-            <li><a href="/logout" class="nav-link px-2 text-white">Logout</a></li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/logout">Logout</a>
+            </li>
             {% else %}
-            <li><a href="/login" class="nav-link px-2 text-white">Login</a></li>
-            <li><a href="/register" class="nav-link px-2 text-white">Register</a></li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/register">Register</a>
+            </li>
             {% endif %}
           </ul>
         </div>
       </div>
-    </div>
-  </header>
-  <div class="container my-3">
-    <div class="alert alert-info" role="alert">
-      This site is a BETA release. Your data is not backed up and may be deleted.
-    </div>
-    {% block content %} {% endblock %}
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  {% block script %} {% endblock %}
-  <script>
-    document.addEventListener('keydown', function (event) {
-      const activeElement = document.activeElement;
-      if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
-        return;
+    </nav>
+
+    <div class="container my-3">{% block content %} {% endblock %}</div>
+
+    <footer class="fixed-bottom bg-dark text-white py-2">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a
+          href="https://github.com/brianbianchi"
+          target="_blank"
+          class="text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="2em"
+            fill="currentColor"
+            class="bi bi-github"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+            />
+          </svg>
+        </a>
+        <span>&copy; 2025 fintasy.io</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block script %} {% endblock %}
+    <script>
+      document.addEventListener("keydown", function (event) {
+        const activeElement = document.activeElement;
+        if (
+          activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA"
+        ) {
+          return;
+        }
+        event.preventDefault();
+        document.getElementById("search-input").focus();
+      });
+
+      function addQueryParam(event) {
+        const searchTerm = document.getElementById("search-input").value;
+        const formAction = event.target.action;
+        if (searchTerm) {
+          event.target.action =
+            formAction + "?q=" + encodeURIComponent(searchTerm);
+        }
       }
-      event.preventDefault();
-      document.getElementById('search-input').focus();
-
-    });
-
-    function addQueryParam(event) {
-      const searchTerm = document.getElementById('search-input').value;
-      const formAction = event.target.action;
-      if (searchTerm) {
-        event.target.action = formAction + '?q=' + encodeURIComponent(searchTerm);
-      }
-    }
-  </script>
-
-</body>
-
+    </script>
+  </body>
 </html>

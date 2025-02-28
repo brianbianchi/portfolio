@@ -7,9 +7,7 @@ from ..models import League, Portfolio
 
 
 def home(request):
-    league = League.objects.order_by("created").first()
-    portfolios = Portfolio.objects.filter(league=league).order_by("-value")[:5]
-    return render(request, "core/home.html", {"portfolios": portfolios})
+    return render(request, "core/home.html")
 
 
 def search(request):
@@ -19,8 +17,10 @@ def search(request):
     users = User.objects.filter(username__icontains=query).order_by("username")
     users_page = request.GET.get("users-page") or 1
     users_paged = paginate(users, users_page)
-    leagues = League.objects.filter(name__icontains=query).order_by("-num_users")
-    leagues_page = request.GET.get("leagues-page") or 1
-    leagues_paged = paginate(leagues, leagues_page)
-    context = {"users": users_paged, "leagues": leagues_paged, "quotes": quotes}
+    portfolios = Portfolio.objects.filter(
+        name__icontains=query, league__is_default=True
+    ).order_by("-value")
+    portfolios_page = request.GET.get("portfolios-page") or 1
+    portfolios_paged = paginate(portfolios, portfolios_page)
+    context = {"users": users_paged, "portfolios": portfolios_paged, "quotes": quotes}
     return render(request, "core/search.html", context)

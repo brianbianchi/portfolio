@@ -23,17 +23,22 @@
 {% endif %}
 {% endif %}
 
-{% if user == league.author %}
+{% if user == league.author and not league.is_default %}
 <a href="{% url 'edit_league' id=league.id %}" class="btn btn-primary my-3" role="button">Edit</a>
+{% if session_id %}
+<a href="{% url 'manage_stripe' %}?session_id={{session_id}}" class="btn btn-primary my-3" role="button">
+    Manage subscription
+</a>
+{% endif %}
 {% endif %}
 
 <div class="my-3">
-    <h2>Portfolios</h2>
+    <h2 class="pb-2 border-bottom">Portfolios</h2>
     {% include '../components/portfolios_list.html' with portfolios=portfolios %}
 </div>
 
 <div class="my-3">
-    <h2>Users</h2>
+    <h2 class="pb-2 border-bottom">Users</h2>
     {% include '../components/users_list.html' with users=users %}
 </div>
 

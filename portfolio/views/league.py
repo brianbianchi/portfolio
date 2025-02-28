@@ -4,7 +4,7 @@ from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from ..helper import paginate
 from ..forms import LeagueForm
-from ..models import League, LeagueUser, Portfolio
+from ..models import StripeSession, League, LeagueUser, Portfolio
 
 
 def view_league(request, id):
@@ -12,6 +12,7 @@ def view_league(request, id):
         return HttpResponseNotAllowed("This method is not allowed.")
     try:
         league = League.objects.get(id=id)
+        session = StripeSession.objects.filter(league=league).first()
         portfolios = Portfolio.objects.filter(league=league).order_by("-value")
         portfolios_page = request.GET.get("portfolios-page") or 1
         portfolios_paged = paginate(portfolios, portfolios_page)
@@ -25,30 +26,32 @@ def view_league(request, id):
             "portfolios": portfolios_paged,
             "users": users_paged,
             "has_access": has_access,
+            "session_id": session.stripe_checkout_session_id if session else None,
         }
         return render(request, "league/league.html", context)
-    except:
+    except Exception as e:
+        print(e)
         return render(request, "shared/404.html")
-
-
-def view_leagues(request):
-    if request.method != "GET":
-        return HttpResponseNotAllowed("This method is not allowed.")
-    leagues = League.objects.all().order_by("-num_users")
-    leagues_page = request.GET.get("leagues-page") or 1
-    leagues_paged = paginate(leagues, leagues_page)
-    return render(request, "league/leagues.html", {"leagues": leagues_paged})
 
 
 @login_required(login_url="/login")
 def create_league(request):
+    session_id = request.GET.get("session_id", None)
+    if not session_id:
+        return redirect("checkout")
+    session = StripeSession.objects.filter(
+        user=request.user, stripe_checkout_session_id=session_id
+    ).first()
+    if not session or session.league:
+        return redirect("create-checkout-session")
     if request.method == "POST":
         form = LeagueForm(request.POST)
         if form.is_valid():
             league = form.save(commit=False)
             league.author = request.user
             league.save()
-            # create LeagueUser
+            session.league = league
+            session.save()
             return redirect(f"/league/{league.id}")
     else:
         form = LeagueForm()
