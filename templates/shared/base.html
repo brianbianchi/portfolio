@@ -19,8 +19,18 @@
     />
     <title>Fintasy | {% block title %}{% endblock %}</title>
     <style>
+      html {
+        position: relative;
+        min-height: 100%;
+        padding-bottom: 160px;
+      }
       body {
         font-family: "Fira Code", serif;
+      }
+      footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
       }
     </style>
   </head>
@@ -113,8 +123,9 @@
 
     <div class="container my-3">{% block content %} {% endblock %}</div>
 
-    <footer class="fixed-bottom bg-dark text-white py-2">
+    <footer class="bg-dark text-white py-2">
       <div class="container d-flex justify-content-between align-items-center">
+        <span>&copy; 2025 fintasy.io</span>
         <a
           href="https://github.com/brianbianchi"
           target="_blank"
@@ -132,7 +143,6 @@
             />
           </svg>
         </a>
-        <span>&copy; 2025 fintasy.io</span>
       </div>
     </footer>
 

@@ -1,11 +1,12 @@
 <div align="center">
     <img alt=" logo" src="/static/images/icon.png" width="12%">
-    <h1> &dollar; Fantasy finance </h1>
+    <h1> &dollar; Fantasy Finance </h1>
 </div>
 
 ## Local setup
 ```console
 cp .env.template .env
+vim .env
 docker compose up -d
 docker exec -it [[CONTAINER_ID]] python manage.py migrate
 docker exec -it [[CONTAINER_ID]] python manage.py createsuperuser
@@ -17,6 +18,15 @@ docker exec -it [[CONTAINER_ID]] python manage.py init
 classDiagram
     class User {
         +String username
+        +Sting email
+    }
+    class StripeSession {
+        +User user
+        +String stripe_customer_id
+        +String stripe_checkout_session_id
+        +String stripe_price_id
+        +League league
+        +bool is_paid
     }
     class League {
         +User author
@@ -32,13 +42,14 @@ classDiagram
     class LeagueUser {
         +User user
         +League league
-        +Datetime created
     }
     class Portfolio {
         +League league
         +User User
         +String name
         +Datetime created
+        +Decimal value
+        +Decimal perc_change
     }
     note for Snapshot "Calculated portfolio value"
     class Snapshot {
@@ -48,10 +59,15 @@ classDiagram
     }
     class Asset {
         +Portfolio portfolio
+        +bool is_currency
         +String ticker
         +int quantity
         +Decimal value
         +Decimal total_value
+    }
+    class FollowAsset {
+        +User user
+        +String ticker
     }
     class Transaction {
         +Portfolio portfolio
@@ -60,10 +76,13 @@ classDiagram
         +Decimal value
         +bool is_purchase
         +Datetime created
+        +Decimal total_value
     }
     User ..> League
     User ..> LeagueUser
     User ..> Portfolio
+    User --> "many" StripeSession : Contains
+    User --> "many" FollowAsset : Contains
     League --> "many" LeagueUser : Contains
     League --> "many" Portfolio : Contains
     Portfolio --> "many" Asset : Contains
