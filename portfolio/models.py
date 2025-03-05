@@ -39,6 +39,10 @@ class Portfolio(models.Model):
     value = models.DecimalField(decimal_places=2, max_digits=200)
 
     @property
+    def change(self):
+        return round((self.value - self.league.start_value), 2)
+
+    @property
     def perc_change(self):
         start_value = self.league.start_value
         perc = ((self.value - start_value) / start_value) * 100

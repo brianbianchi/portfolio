@@ -9,13 +9,23 @@
     <p class="mb-2">Joined {{user.date_joined|naturalday}}</p>
 </div>
 
-<div class="my-3">
-    <h2 class="pb-2 border-bottom">Portfolios</h2>
-    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+<div class="my-4">
+    <h2>Portfolios</h2>
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
+        Create a{% if my_portfolios %}nother{% endif %} Portfolio
+    </a>
+    {% endif %}
+    {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
 </div>
 
-<div class="my-3">
-    <h2 class="pb-2 border-bottom">Leagues</h2>
+<div class="my-4">
+    <h2>Leagues</h2>
     {% include '../components/leagues_list.html' with leagues=leagues %}
+</div>
+
+<div class="my-4">
+    <h2>Followed assets</h2>
+    {% include '../components/followed_asset_list.html' with followed=followed %}
 </div>
 {% endblock %}

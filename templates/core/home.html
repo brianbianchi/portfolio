@@ -1,102 +1,98 @@
 {% extends 'shared/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}home{% endblock %}
 {% block content %}
-
-<div class="px-4 pt-5 my-5 text-center">
-    <h1 class="display-4 fw-bold text-body-emphasis">Fantasy Finance</h1>
-    <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">Compete to make the best returns in the market.</p>
-    </div>
-    <div>
-        <div class="container px-5">
-            <img src="{% static 'images/home.png' %}" class="img-fluid border rounded-3 shadow-lg mb-4"
-                alt="Example stock value chart" width="700" loading="lazy">
-        </div>
+<div class="container my-4">
+    <div class="p-4 text-center bg-body-tertiary rounded-3">
+        <h2 class="text-body-emphasis">Fantasy Finance</h2>
+        <p class="lead">
+            Compete to make the best returns in the market.<br>
+            Trade without risks. Learn without limits.
+        </p>
+        <a href="{% url 'create_league' %}" role="button" class="btn btn-primary btn-sm">
+            Create your own League
+        </a>
     </div>
 </div>
 
-<div class="container px-4 py-5" id="featured-3">
-    <h2 class="pb-2 border-bottom">Features</h2>
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="2em" fill="currentColor" class="bi bi-briefcase"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-                </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Invest</h3>
-            <p>After registering, a new portfolio is created in the "General" league. Users can transact and search for
-                assets using the navbar search. Portfolio and asset values are updated once per day, after the markets
-                have closed.</p>
-            <a href="{% url 'create_portfolio' league_id=1 %}" class="icon-link">
-                Create another portfolio
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
-                </svg>
-            </a>
-            <a href="{% url 'leaderboard' %}" class="icon-link">
-                View top portfolios
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
-                </svg>
-            </a>
-        </div>
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="2em" fill="currentColor" class="bi bi-person-plus"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                    <path fill-rule="evenodd"
-                        d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5" />
-                </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Leagues</h3>
-            <p>
-                Create your own league to compete with your friends.
-                Customize the amount of cash portfolios start with.
-            </p>
-            <a href="{% url 'create_league' %}" class="icon-link">
-                Create a League
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
-                </svg>
-            </a>
-        </div>
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="2em" fill="currentColor" class="bi bi-graph-up-arrow"
-                    viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
-                </svg>
-            </div>
-            <h3 class="fs-2 text-body-emphasis">Growth</h3>
-            <p>
-                Follow your favorite assets.
-                Read news articles related to what you follow.
-                Learn more about the assets that other users are following.
-                Implement your learnings in your real investments.
-            </p>
-            <a href="{% url 'popular_assets' %}" class="icon-link">
-                View the most followed assets
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-chevron-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" />
-                </svg>
-            </a>
-        </div>
-    </div>
+{% if user.is_authenticated %}
+<div class="my-3 py-2">
+    <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
+            viewBox="0 0 16 16">
+            <path
+                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+        </svg>
+        My portfolios
+    </h3>
+    <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
+        Create a{% if my_portfolios %}nother{% endif %} Portfolio
+    </a>
+    {% include '../components/portfolios_list.html' with portfolios=my_portfolios page_query="my-portfolios-page" %}
+</div>
+{% endif %}
+
+<div class="my-3 py-2">
+    <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
+            viewBox="0 0 16 16">
+            <path
+                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+        </svg>
+        Top portfolios
+    </h3>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
+</div>
+
+<div class="my-3 py-2">
+    <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-graph-up-arrow"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+        </svg>
+        Popular assets
+    </h3>
+    {% if followed %}
+    <table class="table table-responsive table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Ticker</th>
+                <th scope="col">Followers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in followed %}
+            <tr>
+                <td>
+                    <a href="{% url 'asset' ticker=asset.ticker %}">
+                        {{asset.ticker}}
+                    </a>
+                </td>
+                <td>{{asset.follow_count|intcomma}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
+    {% else %}
+    <p class="fst-italic fw-light">No followed assets found.</p>
+    {% endif %}
+</div>
+
+<div class="my-3 py-2">
+    <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-newspaper"
+            viewBox="0 0 16 16">
+            <path
+                d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5z" />
+            <path
+                d="M2 3h10v2H2zm0 3h4v3H2zm0 4h4v1H2zm0 2h4v1H2zm5-6h2v1H7zm3 0h2v1h-2zM7 8h2v1H7zm3 0h2v1h-2zm-3 2h2v1H7zm3 0h2v1h-2zm-3 2h2v1H7zm3 0h2v1h-2z" />
+        </svg>
+        News articles
+    </h3>
+    {% include '../components/news_list.html' with news=news %}
 </div>
 
 {% endblock %}

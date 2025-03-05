@@ -11,7 +11,6 @@ urlpatterns = [
     # assets
     path("asset/<ticker>/", asset.asset, name="asset"),
     path("follow/<str:ticker>/", asset.follow_ticker, name="follow_ticker"),
-    path("popular_assets", asset.popular_assets, name="popular_assets"),
     # portfolio
     path("portfolio/<int:id>/", portfolio.view_portfolio, name="view_portfolio"),
     path(
@@ -25,7 +24,6 @@ urlpatterns = [
         portfolio.delete_portfolio,
         name="delete_portfolio",
     ),
-    path("leaderboard/", portfolio.leaderboard, name="leaderboard"),
     # league
     path("league/<int:id>/", league.view_league, name="view_league"),
     path("create_league/", league.create_league, name="create_league"),

@@ -1,7 +1,7 @@
 {% load humanize %}
 
 {% if quotes %}
-<table class="table table-striped table-hover">
+<table class="table table-responsive table-striped table-hover">
     <thead>
         <tr>
             <th scope="col">Name</th>
@@ -18,7 +18,7 @@
                 </a>
             </td>
             <td>
-                {{quote.exchange}}
+                {{quote.exchDisp}}
             </td>
             <td>
                 <a href="{% url 'asset' ticker=quote.symbol %}">

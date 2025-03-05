@@ -33,12 +33,12 @@
 {% endif %}
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Portfolios</h2>
-    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+    <h2>Portfolios</h2>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
 </div>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Users</h2>
+    <h2>Users</h2>
     {% include '../components/users_list.html' with users=users %}
 </div>
 

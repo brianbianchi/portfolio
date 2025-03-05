@@ -57,17 +57,17 @@
 {% endif %}
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Assets</h2>
+    <h2>Assets</h2>
     {% include '../components/assets_list.html' with assets=assets %}
 </div>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Transactions</h2>
-    {% include '../components/transactions_list.html' with txns=txns %}
+    <h2>Transactions</h2>
+    {% include '../components/transactions_list.html' with txns=txns is_author=is_author %}
 </div>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Portfolio value</h2>
+    <h2>Portfolio value</h2>
     <canvas id="valueChart" width="400" height="200"></canvas>
 </div>
 

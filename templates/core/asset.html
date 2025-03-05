@@ -1,5 +1,6 @@
 {% extends 'shared/base.html' %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 {% block title %}asset | {{info.symbol}}{% endblock %}
 {% block content %}
 <h2><a href="https://finance.yahoo.com/quote/{{info.symbol}}">{{info.symbol}}</a></h2>
@@ -32,38 +33,50 @@
             {% endif %}
         </div>
         <div class="col-lg">
-            <table class="table table-striped table-hover">
+            <table class="table table-responsive table-striped table-hover">
                 <tbody>
                     <tr>
                         <th scope="row">Price</th>
-                        <td>${{price|floatformat:2}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Exchange</th>
-                        <td>{{info.exchange}}</td>
+                        <td>${{info.regularMarketPrice|floatformat:2|intcomma}}
+                            <span style="color: {% if info.regularMarketChange >= 0 %}green{% else %}red{% endif %};">
+                                {{info.regularMarketChange|floatformat:2|intcomma}}
+                                ({{info.regularMarketChangePercent|floatformat:2|intcomma}}%)
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Previous close</th>
-                        <td>${{info.previousClose|floatformat:2}}</td>
+                        <td>${{info.previousClose|floatformat:2|intcomma}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Open</th>
-                        <td>${{info.open|floatformat:2}}</td>
+                        <td>${{info.open|floatformat:2|intcomma}}</td>
                     </tr>
                     <tr>
                         <th scope="row">Day's range</th>
-                        <td>${{info.dayLow|floatformat:2}} - ${{info.dayHigh|floatformat:2}}</td>
+                        <td>${{info.dayLow|floatformat:2|intcomma}} - ${{info.dayHigh|floatformat:2|intcomma}}</td>
                     </tr>
                     <tr>
                         <th scope="row">52 week range</th>
-                        <td>${{info.fiftyTwoWeekLow|floatformat:2}} - ${{info.fiftyTwoWeekHigh|floatformat:2}}</td>
+                        <td>${{info.fiftyTwoWeekLow|floatformat:2|intcomma}} -
+                            ${{info.fiftyTwoWeekHigh|floatformat:2|intcomma}}</td>
                     </tr>
                     <tr>
                         <th scope="row">PE ratio</th>
-                        <td>{{info.trailingPE}}</td>
+                        <td>{{info.trailingPE|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Exchange</th>
+                        <td>{{info.fullExchangeName}}</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="mt-5">
+                <h3 class="pb-2 border-bottom">News articles</h3>
+                {% include '../components/news_list.html' with news=news %}
+            </div>
+
         </div>
     </div>
 </div>

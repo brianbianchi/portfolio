@@ -21,6 +21,7 @@ def view_portfolio(request, id):
         dates = [snapshot.created.strftime("%Y-%m-%d") for snapshot in snapshots]
         values = [str(snapshot.value) for snapshot in snapshots]
         context = {
+            "is_author": request.user == portfolio.user,
             "portfolio": portfolio,
             "txns": txns_paged,
             "assets": assets_paged,
@@ -31,17 +32,6 @@ def view_portfolio(request, id):
     except Exception as e:
         print(f"Error: {str(e)}")
         return render(request, "shared/404.html")
-
-
-def leaderboard(request):
-    if request.method != "GET":
-        return HttpResponseNotAllowed("This method is not allowed.")
-    portfolios = Portfolio.objects.filter(league__is_default=True).order_by("-value")
-    protfolios_page = request.GET.get("portfolios-page") or 1
-    protfolios_paged = paginate(portfolios, protfolios_page)
-    return render(
-        request, "portfolio/leaderboard.html", {"portfolios": protfolios_paged}
-    )
 
 
 @login_required(login_url="/login")

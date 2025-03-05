@@ -3,21 +3,49 @@
 {% block title %}Search{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1>Search</h1>
+
+<form method="get" action="{% url 'search' %}" class="d-flex" role="search" onsubmit="addQueryParam(event)">
+    <div class="input-group input-group-lg my-4">
+        <span class="input-group-text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+        </span>
+        <input type="text" class="form-control" id="search-page-input" name="q" value="{{query}}"
+            placeholder="Search stocks, crypto, users, portfolios, etc." aria-label="Search input">
+    </div>
+    <button class="btn btn-outline-primary" type="submit" hidden>
+        Search
+    </button>
+</form>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Quotes</h2>
+    <h2>Quotes</h2>
     {% include '../components/quotes_list.html' with quotes=quotes %}
 </div>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Users</h2>
+    <h2>Users</h2>
     {% include '../components/users_list.html' with users=users %}
 </div>
 
 <div class="my-3">
-    <h2 class="pb-2 border-bottom">Portfolios</h2>
-    {% include '../components/portfolios_list.html' with portfolios=portfolios %}
+    <h2>Portfolios</h2>
+    {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
 </div>
 
+{% endblock %}
+{% block script %}
+<script>
+    function addQueryParam(event) {
+        const searchTerm = document.getElementById("search-page-input").value;
+        const formAction = event.target.action;
+        if (searchTerm) {
+            event.target.action =
+                formAction + "?q=" + encodeURIComponent(searchTerm);
+        }
+    }
+</script>
 {% endblock %}
