@@ -1,22 +1,24 @@
 {% if followed %}
-<table class="table table-responsive table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Ticker</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for asset in followed %}
-        <tr>
-            <td>
-                <a href="{% url 'asset' ticker=asset.ticker %}">
-                    {{asset.ticker}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Ticker</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in followed %}
+            <tr>
+                <td>
+                    <a href="{% url 'asset' ticker=asset.ticker %}">
+                        {{asset.ticker}}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
 {% else %}
 <p class="fst-italic fw-light">No followed assets found.</p>

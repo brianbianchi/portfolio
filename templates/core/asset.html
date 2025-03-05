@@ -33,44 +33,47 @@
             {% endif %}
         </div>
         <div class="col-lg">
-            <table class="table table-responsive table-striped table-hover">
-                <tbody>
-                    <tr>
-                        <th scope="row">Price</th>
-                        <td>${{info.regularMarketPrice|floatformat:2|intcomma}}
-                            <span style="color: {% if info.regularMarketChange >= 0 %}green{% else %}red{% endif %};">
-                                {{info.regularMarketChange|floatformat:2|intcomma}}
-                                ({{info.regularMarketChangePercent|floatformat:2|intcomma}}%)
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Previous close</th>
-                        <td>${{info.previousClose|floatformat:2|intcomma}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Open</th>
-                        <td>${{info.open|floatformat:2|intcomma}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Day's range</th>
-                        <td>${{info.dayLow|floatformat:2|intcomma}} - ${{info.dayHigh|floatformat:2|intcomma}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">52 week range</th>
-                        <td>${{info.fiftyTwoWeekLow|floatformat:2|intcomma}} -
-                            ${{info.fiftyTwoWeekHigh|floatformat:2|intcomma}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">PE ratio</th>
-                        <td>{{info.trailingPE|floatformat:2}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Exchange</th>
-                        <td>{{info.fullExchangeName}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Price</th>
+                            <td>${{info.regularMarketPrice|floatformat:2|intcomma}}
+                                <span
+                                    style="color: {% if info.regularMarketChange >= 0 %}green{% else %}red{% endif %};">
+                                    {{info.regularMarketChange|floatformat:2|intcomma}}
+                                    ({{info.regularMarketChangePercent|floatformat:2|intcomma}}%)
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Previous close</th>
+                            <td>${{info.previousClose|floatformat:2|intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Open</th>
+                            <td>${{info.open|floatformat:2|intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Day's range</th>
+                            <td>${{info.dayLow|floatformat:2|intcomma}} - ${{info.dayHigh|floatformat:2|intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">52 week range</th>
+                            <td>${{info.fiftyTwoWeekLow|floatformat:2|intcomma}} -
+                                ${{info.fiftyTwoWeekHigh|floatformat:2|intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PE ratio</th>
+                            <td>{{info.trailingPE|floatformat:2}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Exchange</th>
+                            <td>{{info.fullExchangeName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="mt-5">
                 <h3 class="pb-2 border-bottom">News articles</h3>

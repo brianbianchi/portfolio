@@ -1,22 +1,24 @@
 {% if users %}
-<table class="table table-responsive table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Username</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>
-                <a href="{% url 'user' name=user.username %}">
-                    {{user.username}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>
+                    <a href="{% url 'user' name=user.username %}">
+                        {{user.username}}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% include './pagination.html' with page=users page_query="users-page" %}
 {% else %}
 <p class="fst-italic fw-light">No users found.</p>

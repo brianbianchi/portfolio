@@ -47,42 +47,6 @@
 
 <div class="my-3 py-2">
     <h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-graph-up-arrow"
-            viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
-        </svg>
-        Popular assets
-    </h3>
-    {% if followed %}
-    <table class="table table-responsive table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Ticker</th>
-                <th scope="col">Followers</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for asset in followed %}
-            <tr>
-                <td>
-                    <a href="{% url 'asset' ticker=asset.ticker %}">
-                        {{asset.ticker}}
-                    </a>
-                </td>
-                <td>{{asset.follow_count|intcomma}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
-    {% else %}
-    <p class="fst-italic fw-light">No followed assets found.</p>
-    {% endif %}
-</div>
-
-<div class="my-3 py-2">
-    <h3>
         <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-newspaper"
             viewBox="0 0 16 16">
             <path
@@ -93,6 +57,44 @@
         News articles
     </h3>
     {% include '../components/news_list.html' with news=news %}
+</div>
+
+<div class="my-3 py-2">
+    <h3>
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-graph-up-arrow"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+        </svg>
+        Popular assets
+    </h3>
+    {% if followed %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Ticker</th>
+                    <th scope="col">Followers</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asset in followed %}
+                <tr>
+                    <td>
+                        <a href="{% url 'asset' ticker=asset.ticker %}">
+                            {{asset.ticker}}
+                        </a>
+                    </td>
+                    <td>{{asset.follow_count|intcomma}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
+    {% else %}
+    <p class="fst-italic fw-light">No followed assets found.</p>
+    {% endif %}
 </div>
 
 {% endblock %}

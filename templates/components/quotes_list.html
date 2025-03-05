@@ -1,34 +1,36 @@
 {% load humanize %}
 
 {% if quotes %}
-<table class="table table-responsive table-striped table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Exchange</th>
-            <th scope="col">Symbol</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for quote in quotes %}
-        <tr>
-            <td>
-                <a href="{% url 'asset' ticker=quote.symbol %}">
-                    {{quote.shortname}}
-                </a>
-            </td>
-            <td>
-                {{quote.exchDisp}}
-            </td>
-            <td>
-                <a href="{% url 'asset' ticker=quote.symbol %}">
-                    {{quote.symbol}}
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Exchange</th>
+                <th scope="col">Symbol</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quote in quotes %}
+            <tr>
+                <td>
+                    <a href="{% url 'asset' ticker=quote.symbol %}">
+                        {{quote.shortname}}
+                    </a>
+                </td>
+                <td>
+                    {{quote.exchDisp}}
+                </td>
+                <td>
+                    <a href="{% url 'asset' ticker=quote.symbol %}">
+                        {{quote.symbol}}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% include './pagination.html' with page=quotes page_query="quotes-page" %}
 {% else %}
 <p class="fst-italic fw-light">No quotes found.</p>
