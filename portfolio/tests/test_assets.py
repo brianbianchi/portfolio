@@ -10,48 +10,44 @@ class AssetsTest(TestCase):
     def setUp(self):
         self.superuser = User.objects.create_superuser(username="admin")
         call_command("init")
-        self.user = User(username="exampleuser", email="exampleuser@gmail.com")
-        self.user.save()
-        self.league = League(
+        self.user = User.objects.create(
+            username="exampleuser", email="exampleuser@gmail.com"
+        )
+        self.league = League.objects.create(
             name="Test League",
             description="Description of the Test League",
             start_value=1000,
             author=self.user,
         )
-        self.league.save()
-        self.portfolio = Portfolio(
+        self.portfolio = Portfolio.objects.create(
             name="Test Portfolio",
             user=self.user,
             league=self.league,
             value=self.league.start_value,
         )
-        self.portfolio.save()
 
     def test_assets_created(self):
-        transaction1 = Transaction(
+        transaction1 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=True,
             ticker="aapl",
             quantity=10,
             value=20.0,
         )
-        transaction1.save()
-        transaction2 = Transaction(
+        transaction2 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=False,
             ticker="aapl",
             quantity=4,
             value=20.0,
         )
-        transaction2.save()
-        transaction3 = Transaction(
+        transaction3 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=False,
             ticker="aapl",
             quantity=3,
             value=20.0,
         )
-        transaction3.save()
 
         assets = Asset.objects.filter(portfolio=self.portfolio)
         self.assertEqual(assets.count(), 2)

@@ -30,7 +30,7 @@
                 <td>Cash / $USD</td>
                 <td> </td>
                 <td> </td>
-                <td>${{asset.value|intcomma}}</td>
+                <td>${{asset.value|floatformat:2|intcomma}}</td>
                 {% else %}
                 <td>
                     <a href="{% url 'asset' ticker=asset.ticker %}">
@@ -38,8 +38,8 @@
                     </a>
                 </td>
                 <td>{{asset.quantity}}</td>
-                <td>${{asset.value|intcomma}}</td>
-                <td>${{asset.total_value|intcomma}}</td>
+                <td>${{asset.value|floatformat:2|intcomma}}</td>
+                <td>${{asset.total_value|floatformat:2|intcomma}}</td>
                 {% endif %}
             </tr>
             {% endfor %}

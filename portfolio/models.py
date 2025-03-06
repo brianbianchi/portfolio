@@ -66,7 +66,7 @@ class Asset(models.Model):
     is_currency = models.BooleanField(default=False)
     ticker = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
-    quantity = models.IntegerField()
+    quantity = models.DecimalField(decimal_places=6, max_digits=200)
 
     @property
     def total_value(self):
@@ -99,7 +99,7 @@ class Transaction(models.Model):
     is_purchase = models.BooleanField(default=False)
     ticker = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
-    quantity = models.IntegerField()
+    quantity = models.DecimalField(decimal_places=6, max_digits=200)
     created = models.DateTimeField(auto_now_add=True)
 
     @property

@@ -33,21 +33,12 @@
                     </a>
                 </td>
                 <td>{{txn.quantity}}</td>
-                {% if txn.is_purchase %}
-                <td style="color: green;">
-                    ${{txn.total_value|intcomma}}
+                <td style="color: {% if txn.is_purchase %}green{% else %}red{% endif %};">
+                    ${{txn.total_value|floatformat:2|intcomma}}
                 </td>
-                <td style="color: green;">
-                    ${{txn.value|intcomma}}
+                <td style="color: {% if txn.is_purchase %}green{% else %}red{% endif %};">
+                    ${{txn.value|floatformat:2|intcomma}}
                 </td>
-                {% else %}
-                <td style="color: red;">
-                    ${{txn.total_value|intcomma}}
-                </td>
-                <td style="color: red;">
-                    ${{txn.value|intcomma}}
-                </td>
-                {% endif %}
                 <td>{{txn.created|naturalday}}</td>
             </tr>
             {% endfor %}

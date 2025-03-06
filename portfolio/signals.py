@@ -11,25 +11,19 @@ def user_post_save(sender, instance, created, **kwargs):
         league = League.objects.filter(is_default=True).first()
         if not league:
             return
-        league_user = LeagueUser()
-        league_user.user = instance
-        league_user.league = league
-        league_user.save()
-        portfolio = Portfolio()
-        portfolio.user = instance
-        portfolio.league = league
-        portfolio.value = league.start_value
-        portfolio.name = instance.username
-        portfolio.save()
+        LeagueUser.objects.create(user=instance, league=league)
+        Portfolio.objects.create(
+            user=instance,
+            league=league,
+            value=league.start_value,
+            name=instance.username,
+        )
 
 
 @receiver(post_save, sender=League)
 def league_post_save(sender, instance, created, **kwargs):
     if created:
-        league_user = LeagueUser()
-        league_user.user = instance.author
-        league_user.league = instance
-        league_user.save()
+        LeagueUser.objects.create(user=instance.author, league=instance)
 
 
 @receiver(post_save, sender=LeagueUser)
@@ -53,17 +47,14 @@ def portfolio_post_save(sender, instance, created, **kwargs):
         league = instance.league
         league.num_portfolios += 1
         league.save()
-        asset = Asset()
-        asset.is_currency = True
-        asset.ticker = ""
-        asset.quantity = 1
-        asset.portfolio = instance
-        asset.value = instance.league.start_value
-        asset.save()
-        snapshot = Snapshot()
-        snapshot.portfolio = instance
-        snapshot.value = instance.league.start_value
-        snapshot.save()
+        Asset.objects.create(
+            is_currency=True,
+            ticker="",
+            quantity=1,
+            portfolio=instance,
+            value=instance.league.start_value,
+        )
+        Snapshot.objects.create(portfolio=instance, value=instance.league.start_value)
 
 
 @receiver(post_delete, sender=Portfolio)
@@ -90,13 +81,13 @@ def txn_post_save(sender, instance, created, **kwargs):
             asset.value = instance.value
             asset.save()
     except:
-        asset = Asset()
-        asset.portfolio = instance.portfolio
-        asset.is_currency = False
-        asset.ticker = instance.ticker
-        asset.value = instance.value
-        asset.quantity = instance.quantity
-        asset.save()
+        Asset.objects.create(
+            portfolio=instance.portfolio,
+            is_currency=False,
+            ticker=instance.ticker,
+            value=instance.value,
+            quantity=instance.quantity,
+        )
 
     cash = Asset.objects.get(portfolio=instance.portfolio, is_currency=True)
     if instance.is_purchase:

@@ -1,4 +1,3 @@
-from unittest.mock import patch
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.management import call_command
@@ -12,24 +11,24 @@ class InviteTest(TestCase):
         self.superuser = User.objects.create_superuser(username="admin")
         call_command("init")
         self.default_league = League.objects.get(is_default=True)
-        self.user1 = User(username="exampleuser1", email="exampleuser1@gmail.com")
-        self.user1.save()
-        self.user2 = User(username="exampleuser2", email="exampleuser2@gmail.com")
-        self.user2.save()
-        self.league = League(
+        self.user1 = User.objects.create(
+            username="exampleuser1", email="exampleuser1@gmail.com"
+        )
+        self.user2 = User.objects.create(
+            username="exampleuser2", email="exampleuser2@gmail.com"
+        )
+        self.league = League.objects.create(
             name="Test League",
             description="Description of the Test League",
             start_value=1000,
             author=self.user1,
         )
-        self.league.save()
-        self.portfolio = Portfolio(
+        self.portfolio = Portfolio.objects.create(
             name="Test Portfolio",
             user=self.user1,
             league=self.league,
             value=self.league.start_value,
         )
-        self.portfolio.save()
 
     def test_user_invited_valid(self):
         form_data = {
@@ -63,8 +62,9 @@ class InviteTest(TestCase):
         self.assertIn("Select a valid choice", form.errors["league"][0])
 
     def test_new_user(self):
-        user = User(username="exampleuser3", email="exampleuser3@gmail.com")
-        user.save()
+        user = User.objects.create(
+            username="exampleuser3", email="exampleuser3@gmail.com"
+        )
         league_users = LeagueUser.objects.filter(league=self.default_league, user=user)
         portfolios = Portfolio.objects.filter(league=self.default_league, user=user)
 

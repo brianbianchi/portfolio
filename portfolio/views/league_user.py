@@ -11,12 +11,13 @@ def invite(request, league_id):
     if request.method == "POST":
         form = LeagueUserForm(request.POST, user=request.user, default_league=league)
         if form.is_valid():
-            league_user = LeagueUser()
-            league_user.user = form.cleaned_data["username"]
-            league_user.league = form.cleaned_data["league"]
-            if not LeagueUser.objects.filter(
-                user=league_user.user, league=league_user.league
-            ).exists():
+            league_user = LeagueUser(
+                user=form.cleaned_data["username"], league=form.cleaned_data["league"]
+            )
+            existing = LeagueUser.objects.filter(
+                user=league_user, league=league_user.league
+            ).exists()
+            if not existing:
                 league_user.save()
             return redirect(f"/league/{league_user.league.id}")
 

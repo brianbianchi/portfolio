@@ -13,46 +13,42 @@ class TransactionFormTest(TestCase):
     def setUp(self):
         self.superuser = User.objects.create_superuser(username="admin")
         call_command("init")
-        self.user = User(username="exampleuser", email="exampleuser@gmail.com")
-        self.user.save()
-        self.league = League(
+        self.user = User.objects.create(
+            username="exampleuser", email="exampleuser@gmail.com"
+        )
+        self.league = League.objects.create(
             name="Test League",
             description="Description of the Test League",
             start_value=1000,
             author=self.user,
         )
-        self.league.save()
-        self.portfolio = Portfolio(
+        self.portfolio = Portfolio.objects.create(
             name="Test Portfolio",
             user=self.user,
             league=self.league,
             value=self.league.start_value,
         )
-        self.portfolio.save()
-        self.transaction1 = Transaction(
+        self.transaction1 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=True,
             ticker="aapl",
             quantity=10,
             value=20.0,
         )
-        self.transaction1.save()
-        transaction2 = Transaction(
+        self.transaction2 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=False,
             ticker="aapl",
             quantity=4,
             value=20.0,
         )
-        transaction2.save()
-        transaction3 = Transaction(
+        self.transaction3 = Transaction.objects.create(
             portfolio=self.portfolio,
             is_purchase=False,
             ticker="aapl",
             quantity=3,
             value=20.0,
         )
-        transaction3.save()
         self.request = HttpRequest()
         self.request.user = self.user
         self.request.POST = {"buy-btn": [""]}

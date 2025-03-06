@@ -31,9 +31,9 @@
           </a>
         </td>
         <td>
-          ${{portfolio.value|intcomma}}
+          ${{portfolio.value|floatformat:2|intcomma}}
           <small style="color: {% if portfolio.perc_change >= 0 %}green{% else %}red{% endif %};">
-            {{portfolio.change}} ({{portfolio.perc_change|intcomma}}%)
+            {{portfolio.change|floatformat:2|intcomma}} ({{portfolio.perc_change|floatformat:2|intcomma}}%)
           </small>
         </td>
         <td>{{portfolio.created|naturalday}}</td>

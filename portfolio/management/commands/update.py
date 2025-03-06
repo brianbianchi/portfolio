@@ -29,9 +29,6 @@ class Command(BaseCommand):
                 asset.value = price
                 asset.save()
                 total_value += price * asset.quantity
-            snapshot = Snapshot()
-            snapshot.portfolio = portfolio
-            snapshot.value = total_value
-            snapshot.save()
+            Snapshot.objects.create(portfolio=portfolio, value=total_value)
             portfolio.value = total_value
             portfolio.save()
