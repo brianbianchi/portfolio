@@ -3,12 +3,18 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th scope="col">Name</th>
                 <th scope="col">Ticker</th>
             </tr>
         </thead>
         <tbody>
             {% for asset in followed %}
             <tr>
+                <td>
+                    <a href="{% url 'asset' ticker=asset.ticker %}">
+                        {{asset.name}}
+                    </a>
+                </td>
                 <td>
                     <a href="{% url 'asset' ticker=asset.ticker %}">
                         {{asset.ticker}}

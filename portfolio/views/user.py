@@ -34,7 +34,7 @@ def user(request, name):
         portfolios = Portfolio.objects.filter(user=user).order_by("-value")
         portfolios_page = request.GET.get("portfolios-page") or 1
         portfolios_paged = paginate(portfolios, portfolios_page)
-        followed = FollowAsset.objects.filter(user=user).order_by("-ticker")
+        followed = FollowAsset.objects.filter(user=user).order_by("ticker")
         followed_page = request.GET.get("follow-page") or 1
         followed_paged = paginate(followed, followed_page)
         context = {

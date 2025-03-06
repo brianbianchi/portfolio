@@ -1,9 +1,7 @@
-from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 import yfinance as yf
-from ..helper import paginate
 from ..forms import TransactionForm
 from ..models import FollowAsset
 
@@ -28,7 +26,9 @@ def asset(request, ticker):
                     user=request.user, ticker=ticker
                 ).first()
                 if not existing_follow:
-                    FollowAsset.objects.create(user=request.user, ticker=ticker)
+                    FollowAsset.objects.create(
+                        user=request.user, ticker=ticker, name=info.longName
+                    )
                 return redirect(f"/portfolio/{txn.portfolio.id}")
         context = {
             "ticker": ticker,
@@ -44,13 +44,13 @@ def asset(request, ticker):
 
 
 @login_required
-def follow_ticker(request, ticker):
+def follow_ticker(request, ticker, name):
     existing_follow = FollowAsset.objects.filter(
         user=request.user, ticker=ticker
     ).first()
 
     if not existing_follow:
-        FollowAsset.objects.create(user=request.user, ticker=ticker)
+        FollowAsset.objects.create(user=request.user, ticker=ticker, name=name)
         action = "followed"
     else:
         existing_follow.delete()

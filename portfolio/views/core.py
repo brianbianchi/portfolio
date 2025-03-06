@@ -16,7 +16,7 @@ def home(request):
         my_protfolios_page = request.GET.get("my-portfolios-page") or 1
         my_protfolios_paged = paginate(my_portfolios, my_protfolios_page)
     most_followed_tickers = (
-        FollowAsset.objects.values("ticker")
+        FollowAsset.objects.values("ticker", "name")
         .annotate(follow_count=Count("user"))
         .order_by("-follow_count")
     )

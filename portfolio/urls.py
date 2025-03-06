@@ -10,7 +10,7 @@ urlpatterns = [
     path("user/<name>/", user.user, name="user"),
     # assets
     path("asset/<ticker>/", asset.asset, name="asset"),
-    path("follow/<str:ticker>/", asset.follow_ticker, name="follow_ticker"),
+    path("follow/<str:ticker>/<str:name>/", asset.follow_ticker, name="follow_ticker"),
     # portfolio
     path("portfolio/<int:id>/", portfolio.view_portfolio, name="view_portfolio"),
     path(

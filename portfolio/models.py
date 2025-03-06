@@ -81,6 +81,7 @@ class Asset(models.Model):
 class FollowAsset(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ticker = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
     class Meta:
         constraints = [

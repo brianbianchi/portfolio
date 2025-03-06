@@ -7,11 +7,11 @@
 <small>{{info.longName}}</small>
 {% if user.is_authenticated %}
 {% if is_following %}
-<button id="follow-btn" class="btn btn-danger" data-ticker="{{ ticker }}">
+<button id="follow-btn" class="btn btn-danger" data-ticker="{{ticker}}" data-name="{{info.longName}}">
     Unfollow
 </button>
 {% else %}
-<button id="follow-btn" class="btn btn-primary" data-ticker="{{ ticker }}">
+<button id="follow-btn" class="btn btn-primary" data-ticker="{{ticker}}" data-name="{{info.longName}}">
     Follow
 </button>
 {% endif %}
@@ -90,8 +90,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         const followButton = document.getElementById('follow-btn');
         const ticker = followButton.getAttribute('data-ticker');
+        const name = followButton.getAttribute('data-name');
         followButton.addEventListener('click', function () {
-            fetch(`/follow/${ticker}/`, {
+            fetch(`/follow/${ticker}/${name}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
