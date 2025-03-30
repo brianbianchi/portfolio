@@ -35,7 +35,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container container-fluid">
-      <a href="/" class="navbar-brand align-items-center text-decoration-none">
+      <a href="{% url 'home' %}" class="navbar-brand align-items-center text-decoration-none">
         <img src="{% static 'images/icon.png' %}" class="bi me-2" width="40" aria-label="logo" />
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -62,26 +62,26 @@
 
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
           <li class="nav-item">
-            <a class="nav-link text-white" href="/">Home</a>
+            <a class="nav-link text-white" href="{% url 'home' %}">Home</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link text-white" href="/user/{{user.username}}">Profile</a>
+            <a class="nav-link text-white" href="{% url 'user' name=user.username %}">Profile</a>
           </li>
           {% if user.is_superuser %}
           <li class="nav-item">
-            <a class="nav-link text-white" href="/admin">Admin</a>
+            <a class="nav-link text-white" href="{% url 'admin' %}">Admin</a>
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link text-white" href="/logout">Logout</a>
+            <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link text-white" href="/login">Login</a>
+            <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="/register">Register</a>
+            <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
           </li>
           {% endif %}
         </ul>

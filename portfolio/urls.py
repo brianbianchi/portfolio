@@ -5,9 +5,10 @@ urlpatterns = [
     # core
     path("", core.home, name="home"),
     path("search", core.search, name="search"),
+    path("user/<name>/", user.user, name="user"),
+    # authentication
     path("register", user.register, name="register"),
     path("logout", user.logout_view, name="logout"),
-    path("user/<name>/", user.user, name="user"),
     # assets
     path("asset/<ticker>/", asset.asset, name="asset"),
     path("follow/<str:ticker>/<str:name>/", asset.follow_ticker, name="follow_ticker"),

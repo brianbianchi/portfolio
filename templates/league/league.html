@@ -8,7 +8,7 @@
     <h3 class="mb-2">{{league.description}}</h3>
     <p class="mb-1">
         Created {{league.created|naturalday}} by
-        <a href="/user/{{league.author.username}}">{{league.author.username}}</a>.
+        <a href="{% url 'user' name=league.author.username %}">{{league.author.username}}</a>.
     </p>
 </div>
 
