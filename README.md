@@ -1,6 +1,6 @@
 <div align="center">
-    <img alt=" logo" src="/static/images/icon.png" width="12%">
-    <h1> &dollar; Fantasy Finance </h1>
+    <img alt="logo" src="/static/images/icon.png" width="12%">
+    <h1>Fantasy Finance</h1>
 </div>
 
 ## Local setup
@@ -8,9 +8,10 @@
 cp .env.template .env
 vim .env
 docker compose up -d
-docker exec -it [[CONTAINER_ID]] python manage.py migrate
-docker exec -it [[CONTAINER_ID]] python manage.py createsuperuser
-docker exec -it [[CONTAINER_ID]] python manage.py init
+docker exec -it [[CONTAINER_ID]] /bin/sh
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py init
 ```
 
 ## Class diagram
