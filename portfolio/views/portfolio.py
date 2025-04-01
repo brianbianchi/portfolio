@@ -14,7 +14,9 @@ def view_portfolio(request, id):
         txns = Transaction.objects.filter(portfolio=portfolio).order_by("created")
         txns_page = request.GET.get("txns-page") or 1
         txns_paged = paginate(txns, txns_page)
-        assets = Asset.objects.filter(portfolio=portfolio).order_by("-value")
+        assets = Asset.objects.filter(portfolio=portfolio).order_by(
+            "-is_currency", "-value"
+        )
         assets_page = request.GET.get("assets-page") or 1
         assets_paged = paginate(assets, assets_page)
         snapshots = Snapshot.objects.filter(portfolio=portfolio).order_by("created")
