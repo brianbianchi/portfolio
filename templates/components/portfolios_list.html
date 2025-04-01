@@ -19,6 +19,9 @@
             </svg>
           </span>
         </th>
+        <th scope="col">Day change</th>
+        <th scope="col">Total change</th>
+        <th scope="col">Last updated</th>
         <th scope="col">Created</th>
       </tr>
     </thead>
@@ -32,10 +35,20 @@
         </td>
         <td>
           ${{portfolio.value|floatformat:2|intcomma}}
-          <small style="color: {% if portfolio.perc_change >= 0 %}green{% else %}red{% endif %};">
-            {{portfolio.change|floatformat:2|intcomma}} ({{portfolio.perc_change|floatformat:2|intcomma}}%)
-          </small>
         </td>
+        <td>
+          {% if portfolio.day_change %}
+          <span style="color: {% if portfolio.day_change >= 0 %}green{% else %}red{% endif %};">
+            {{portfolio.day_change|floatformat:2|intcomma}} ({{portfolio.day_perc_change|floatformat:2|intcomma}}%)
+          </span>
+          {% else %} - {% endif %}
+        </td>
+        <td>
+          <span style="color: {% if portfolio.total_change >= 0 %}green{% else %}red{% endif %};">
+            {{portfolio.total_change|floatformat:2|intcomma}} ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
+          </span>
+        </td>
+        <td>{{portfolio.last_updated|naturalday}}</td>
         <td>{{portfolio.created|naturalday}}</td>
       </tr>
       {% endfor %}

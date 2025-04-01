@@ -36,17 +36,36 @@ class Portfolio(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
     value = models.DecimalField(decimal_places=2, max_digits=200)
 
     @property
-    def change(self):
-        return round((self.value - self.league.start_value), 2)
+    def day_change(self):
+        start_value = (
+            Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
+        ).value
+        if not start_value:
+            return None
+        return round((self.value - start_value), 2)
 
     @property
-    def perc_change(self):
+    def day_perc_change(self):
+        start_value = (
+            Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
+        ).value
+        if not start_value:
+            return None
+        return round(((self.value - start_value) / start_value) * 100, 2)
+
+    @property
+    def total_change(self):
         start_value = self.league.start_value
-        perc = ((self.value - start_value) / start_value) * 100
-        return round(perc, 2)
+        return round((self.value - start_value), 2)
+
+    @property
+    def total_perc_change(self):
+        start_value = self.league.start_value
+        return round(((self.value - start_value) / start_value) * 100, 2)
 
     def __str__(self):
         return f"{self.name}"
@@ -66,13 +85,27 @@ class Asset(models.Model):
     is_currency = models.BooleanField(default=False)
     ticker = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
+    last_updated = models.DateTimeField()
     quantity = models.DecimalField(decimal_places=6, max_digits=200)
+    previous_close = models.DecimalField(decimal_places=2, max_digits=200)
 
     @property
     def total_value(self):
         if self.is_currency:
             return self.value
         return self.value * self.quantity
+
+    @property
+    def day_change(self):
+        return round((self.value - self.previous_close), 2)
+
+    @property
+    def day_perc_change(self):
+        if self.previous_close == 0:
+            return 0
+        return round(
+            ((self.value - self.previous_close) / self.previous_close) * 100, 2
+        )
 
     def __str__(self):
         return f"{self.portfolio.name} has {self.quantity} {self.ticker}"

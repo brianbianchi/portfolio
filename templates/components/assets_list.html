@@ -20,7 +20,7 @@
                         </svg>
                     </span>
                 </th>
-                <th scope="col">Total value</th>
+                <th scope="col">Value per item</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +28,8 @@
             <tr>
                 {% if asset.is_currency %}
                 <td>Cash / $USD</td>
-                <td> </td>
-                <td> </td>
+                <td> - </td>
+                <td> - </td>
                 <td>${{asset.value|floatformat:2|intcomma}}</td>
                 {% else %}
                 <td>
@@ -38,8 +38,12 @@
                     </a>
                 </td>
                 <td>{{asset.quantity}}</td>
+                <td>${{asset.total_value|floatformat:2|intcomma}}
+                    <small style="color: {% if asset.day_change >= 0 %}green{% else %}red{% endif %};">
+                        {{asset.day_change|floatformat:2|intcomma}} ({{asset.day_perc_change|floatformat:2|intcomma}}%)
+                    </small>
+                </td>
                 <td>${{asset.value|floatformat:2|intcomma}}</td>
-                <td>${{asset.total_value|floatformat:2|intcomma}}</td>
                 {% endif %}
             </tr>
             {% endfor %}

@@ -78,7 +78,6 @@ def txn_post_save(sender, instance, created, **kwargs):
             asset.delete()
         else:
             asset.quantity -= instance.quantity
-            asset.value = instance.value
             asset.save()
     except:
         Asset.objects.create(

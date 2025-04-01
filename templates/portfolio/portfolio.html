@@ -7,8 +7,15 @@
     <h1>{{portfolio.name}}</h1>
     <h3 class="mb-2">
         Value: ${{portfolio.value|intcomma}}
-        <small style="color: {% if portfolio.perc_change >= 0 %}green{% else %}red {% endif %};">
-            {{portfolio.change|floatformat:2|intcomma}} ({{portfolio.perc_change|floatformat:2|intcomma}}%)
+        <br>
+        <small style="color: {% if portfolio.day_change >= 0 %}green{% else %}red {% endif %};">
+            Day change: {{portfolio.day_change|floatformat:2|intcomma}}
+            ({{portfolio.day_perc_change|floatformat:2|intcomma}}%)
+        </small>
+        <br>
+        <small style="color: {% if portfolio.total_change >= 0 %}green{% else %}red {% endif %};">
+            Total change: {{portfolio.total_change|floatformat:2|intcomma}}
+            ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
         </small>
         <br>
         League: <a href="{% url 'view_league' id=portfolio.league.id %}">

@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 from django.core.management.base import BaseCommand
 from ...helper import get_stock_price
@@ -26,7 +27,9 @@ class Command(BaseCommand):
                 else:
                     price = get_stock_price(asset.ticker)
                     cache[asset.ticker] = price
+                asset.previous_close = asset.value
                 asset.value = price
+                asset.last_updated = datetime.now()
                 asset.save()
                 total_value += price * asset.quantity
             Snapshot.objects.create(portfolio=portfolio, value=total_value)
