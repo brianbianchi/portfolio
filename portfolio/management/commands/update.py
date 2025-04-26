@@ -29,7 +29,6 @@ class Command(BaseCommand):
                     cache[asset.ticker] = price
                 asset.previous_close = asset.value
                 asset.value = price
-                asset.last_updated = datetime.now()
                 asset.save()
                 total_value += price * asset.quantity
             Snapshot.objects.create(portfolio=portfolio, value=total_value)

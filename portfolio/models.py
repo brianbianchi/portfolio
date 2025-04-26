@@ -85,9 +85,9 @@ class Asset(models.Model):
     is_currency = models.BooleanField(default=False)
     ticker = models.CharField(max_length=200)
     value = models.DecimalField(decimal_places=2, max_digits=200)
-    last_updated = models.DateTimeField()
+    last_updated = models.DateTimeField(auto_now=True)
     quantity = models.DecimalField(decimal_places=6, max_digits=200)
-    previous_close = models.DecimalField(decimal_places=2, max_digits=200)
+    previous_close = models.DecimalField(decimal_places=2, max_digits=200, default=0)
 
     @property
     def total_value(self):

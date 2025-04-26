@@ -22,12 +22,10 @@ def home(request):
     )
     follow_page = request.GET.get("follow-page") or 1
     follow_paged = paginate(most_followed_tickers, follow_page)
-    news = yf.Search("^GSPC").news
     context = {
         "portfolios": protfolios_paged,
         "my_portfolios": my_protfolios_paged,
         "followed": follow_paged,
-        "news": news,
     }
     return render(request, "core/home.html", context)
 
