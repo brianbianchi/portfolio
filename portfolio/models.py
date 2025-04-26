@@ -41,21 +41,17 @@ class Portfolio(models.Model):
 
     @property
     def day_change(self):
-        start_value = (
-            Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
-        ).value
-        if not start_value:
+        snap = Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
+        if not snap:
             return None
-        return round((self.value - start_value), 2)
+        return round((self.value - snap.value), 2)
 
     @property
     def day_perc_change(self):
-        start_value = (
-            Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
-        ).value
-        if not start_value:
+        snap = Snapshot.objects.filter(portfolio=self).order_by("-created")[1:2].first()
+        if not snap:
             return None
-        return round(((self.value - start_value) / start_value) * 100, 2)
+        return round(((self.value - snap.value) / snap.value) * 100, 2)
 
     @property
     def total_change(self):
