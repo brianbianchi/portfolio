@@ -7,6 +7,12 @@ from ..models import FollowAsset, Portfolio
 
 
 def home(request):
+    # month_query = request.GET.get("month") or 1
+    # convert to datetime
+    # portfolios = MyModel.objects.filter(
+    #     datetime_field__gte=start_of_month,
+    #     datetime_field__lte=current_time
+    # )
     portfolios = Portfolio.objects.filter(league__is_default=True).order_by("-value")
     protfolios_page = request.GET.get("portfolios-page") or 1
     protfolios_paged = paginate(portfolios, protfolios_page)

@@ -1,7 +1,7 @@
 import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, reverse
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 from ..models import StripeSession
@@ -64,7 +64,7 @@ def manage_stripe(request) -> HttpResponse:
 
 
 @csrf_exempt
-def stripe_webhook(request) -> JsonResponse:
+def stripe_webhook(request) -> HttpResponse:
     """
     Stripe sends webhook events to this endpoint.
     Webhook signature is verified and db records are updated accordingly.
@@ -83,8 +83,7 @@ def stripe_webhook(request) -> JsonResponse:
         raise stripe.error.SignatureVerificationError(e)
 
     _update_record(event)
-
-    return JsonResponse({"status": "success"})
+    return HttpResponse(status=200)
 
 
 def _update_record(webhook_event) -> None:
