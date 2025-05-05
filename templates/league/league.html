@@ -25,11 +25,6 @@
 
 {% if user == league.author and not league.is_default %}
 <a href="{% url 'edit_league' id=league.id %}" class="btn btn-primary my-3" role="button">Edit</a>
-{% if session_id %}
-<a href="{% url 'manage_stripe' %}?session_id={{session_id}}" class="btn btn-primary my-3" role="button">
-    Manage subscription
-</a>
-{% endif %}
 {% endif %}
 
 <div class="my-3">

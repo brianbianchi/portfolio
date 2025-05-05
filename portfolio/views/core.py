@@ -2,25 +2,25 @@ from django.contrib.auth.models import User
 from django.db.models import Count, Q
 from django.shortcuts import render
 import yfinance as yf
-from ..helper import paginate
-from ..models import FollowAsset, Portfolio
+from ..helper import paginate, get_market_indices
+from ..models import FollowAsset, League, Portfolio
 
 
 def home(request):
-    # month_query = request.GET.get("month") or 1
-    # convert to datetime
-    # portfolios = MyModel.objects.filter(
-    #     datetime_field__gte=start_of_month,
-    #     datetime_field__lte=current_time
-    # )
     portfolios = Portfolio.objects.filter(league__is_default=True).order_by("-value")
     protfolios_page = request.GET.get("portfolios-page") or 1
     protfolios_paged = paginate(portfolios, protfolios_page)
+
     my_protfolios_paged = None
     if request.user.is_authenticated:
         my_portfolios = portfolios.filter(user=request.user)
         my_protfolios_page = request.GET.get("my-portfolios-page") or 1
         my_protfolios_paged = paginate(my_portfolios, my_protfolios_page)
+
+    leagues = League.objects.order_by("-num_users")
+    leagues_page = request.GET.get("leagues-page") or 1
+    leagues_paged = paginate(leagues, leagues_page)
+
     most_followed_tickers = (
         FollowAsset.objects.values("ticker", "name")
         .annotate(follow_count=Count("user"))
@@ -28,10 +28,14 @@ def home(request):
     )
     follow_page = request.GET.get("follow-page") or 1
     follow_paged = paginate(most_followed_tickers, follow_page)
+
+    indices = get_market_indices()
     context = {
-        "portfolios": protfolios_paged,
         "my_portfolios": my_protfolios_paged,
+        "portfolios": protfolios_paged,
+        "leagues": leagues_paged,
         "followed": follow_paged,
+        "indices": indices,
     }
     return render(request, "core/home.html", context)
 

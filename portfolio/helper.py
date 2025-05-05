@@ -1,5 +1,3 @@
-import calendar
-import datetime
 from decimal import Decimal
 from django.core.paginator import Paginator
 import yfinance as yf
@@ -20,8 +18,11 @@ def paginate(list, page_number):
     return paginator.get_page(page_number)
 
 
-def get_date_query(dt: datetime):
-    min = dt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    last_day = calendar.monthrange(dt.year, dt.month)[1]
-    max = dt.replace(day=last_day, hour=23, minute=59, second=59, microsecond=999999)
-    return min, max
+def get_market_indices():
+    # S&P500, DJI, Nasdaq, Gold, Bitcoin
+    tickers = ["^GSPC", "^DJI", "^IXIC", "GC=F", "BTC-USD"]
+    ret = []
+    for ticker in tickers:
+        info = yf.Ticker(ticker).info
+        ret.append(info)
+    return ret

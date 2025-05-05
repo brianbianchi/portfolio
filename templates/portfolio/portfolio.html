@@ -5,23 +5,26 @@
 {% block content %}
 <div class="border-bottom mb-2">
     <h1>{{portfolio.name}}</h1>
-    <h3 class="mb-2">
-        Value: ${{portfolio.value|intcomma}}
-        <br>
-        <small style="color: {% if portfolio.day_change >= 0 %}green{% else %}red {% endif %};">
-            Day change: {{portfolio.day_change|floatformat:2|intcomma}}
+    <h3>${{portfolio.value|intcomma}}</h3>
+    <span>
+        Today:
+        <span class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+            {{portfolio.day_change|floatformat:2|intcomma}}
             ({{portfolio.day_perc_change|floatformat:2|intcomma}}%)
-        </small>
-        <br>
-        <small style="color: {% if portfolio.total_change >= 0 %}green{% else %}red {% endif %};">
-            Total change: {{portfolio.total_change|floatformat:2|intcomma}}
+        </span>
+    </span>
+    <span>
+        Total:
+        <span class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+            {{portfolio.total_change|floatformat:2|intcomma}}
             ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
-        </small>
-        <br>
+        </span>
+    </span>
+    <p class="mb-1">
         League: <a href="{% url 'view_league' id=portfolio.league.id %}">
             {{portfolio.league.name}}
         </a>
-    </h3>
+    </p>
     <p class="mb-1">
         Created {{league.created|naturalday}} by
         <a href="{% url 'user' name=portfolio.user.username %}">

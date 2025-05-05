@@ -137,16 +137,3 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.portfolio.name} bought {self.quantity} {self.ticker}"
-
-
-class StripeSession(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, help_text="The user who initiated the checkout."
-    )
-    stripe_customer_id = models.CharField(max_length=255)
-    stripe_checkout_session_id = models.CharField(max_length=255)
-    stripe_price_id = models.CharField(max_length=255)
-    league = models.ForeignKey(
-        League, on_delete=models.SET_NULL, null=True, blank=True, default=None
-    )
-    is_paid = models.BooleanField(default=False)

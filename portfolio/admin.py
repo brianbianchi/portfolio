@@ -6,7 +6,6 @@ from .models import (
     LeagueUser,
     Portfolio,
     Snapshot,
-    StripeSession,
     Transaction,
 )
 
@@ -17,7 +16,6 @@ models = [
     LeagueUser,
     Portfolio,
     Snapshot,
-    StripeSession,
     Transaction,
 ]
 admin.site.register(models)

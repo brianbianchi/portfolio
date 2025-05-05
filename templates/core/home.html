@@ -1,92 +1,144 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}home{% endblock %}
+{% block title %}Compete to make the best returns in the market{% endblock %}
 {% block content %}
-<div class="container my-4">
-    <div class="p-4 text-center bg-body-tertiary rounded-3">
-        <h2 class="text-body-emphasis">Fantasy Finance</h2>
-        <p class="lead">
-            Compete to make the best returns in the market.<br>
-            Trade without risks. Learn without limits.
-        </p>
-        <a href="{% url 'create_league' %}" role="button" class="btn btn-primary btn-sm">
-            Create your own League
-        </a>
+<div class="row">
+    <div class="col-lg-9 order-sm-last order-md-last order-lg-first">
+        {% if user.is_authenticated %}
+        <div class="my-3 py-2">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                </svg>
+                My portfolios
+            </h3>
+            <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
+                Create a{% if my_portfolios %}nother{% endif %} Portfolio
+            </a>
+            {% include '../components/portfolios_list.html' with portfolios=my_portfolios
+            page_query="my-portfolios-page" %}
+        </div>
+        {% endif %}
+
+        <div class="my-3 py-2">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                </svg>
+                Top portfolios
+            </h3>
+            {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
+        </div>
+
+        <div class="my-3 py-2">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-collection"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z" />
+                </svg>
+                Popular leagues
+            </h3>
+            <a href="{% url 'create_league' %}" role="button" class="btn btn-primary btn-sm">
+                Create your own League
+            </a>
+            {% include '../components/leagues_list.html' with leagues=leagues page_query="leagues-page" %}
+        </div>
+
+        <div class="my-3 py-2">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-graph-up-arrow"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
+                </svg>
+                Popular assets
+            </h3>
+            {% if followed %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Ticker</th>
+                            <th scope="col">Followers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asset in followed %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'asset' ticker=asset.ticker %}">
+                                    {{asset.name}}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'asset' ticker=asset.ticker %}">
+                                    {{asset.ticker}}
+                                </a>
+                            </td>
+                            <td>{{asset.follow_count|intcomma}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
+            {% else %}
+            <p class="fst-italic fw-light">No followed assets found.</p>
+            {% endif %}
+        </div>
     </div>
-</div>
-
-{% if user.is_authenticated %}
-<div class="my-3 py-2">
-    <h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
-            viewBox="0 0 16 16">
-            <path
-                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-        </svg>
-        My portfolios
-    </h3>
-    <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
-        Create a{% if my_portfolios %}nother{% endif %} Portfolio
-    </a>
-    {% include '../components/portfolios_list.html' with portfolios=my_portfolios page_query="my-portfolios-page" %}
-</div>
-{% endif %}
-
-<div class="my-3 py-2">
-    <h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-briefcase"
-            viewBox="0 0 16 16">
-            <path
-                d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
-        </svg>
-        Top portfolios
-    </h3>
-    {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
-</div>
-
-<div class="my-3 py-2">
-    <h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-graph-up-arrow"
-            viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5" />
-        </svg>
-        Popular assets
-    </h3>
-    {% if followed %}
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Ticker</th>
-                    <th scope="col">Followers</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for asset in followed %}
-                <tr>
-                    <td>
-                        <a href="{% url 'asset' ticker=asset.ticker %}">
-                            {{asset.name}}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{% url 'asset' ticker=asset.ticker %}">
-                            {{asset.ticker}}
-                        </a>
-                    </td>
-                    <td>{{asset.follow_count|intcomma}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="col-lg-3">
+        <div class="my-3 py-2">
+            <h3><svg xmlns="http://www.w3.org/2000/svg" width="1.4em" fill="currentColor" class="bi bi-globe-americas"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484q-.121.12-.242.234c-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z" />
+                </svg>
+                Market indices
+            </h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Index</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asset in indices %}
+                        <tr>
+                            <td>
+                                <a href="https://finance.yahoo.com/quote/{{asset.symbol}}">
+                                    {% if asset.longName %}
+                                    {{asset.longName}}
+                                    {% else %}
+                                    {{asset.shortName}}
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>
+                                ${{asset.regularMarketPrice|floatformat:2|intcomma}}
+                                <span
+                                    class="badge text-bg-{% if asset.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+                                    {{asset.regularMarketChange|floatformat:2|intcomma}}
+                                    ({{asset.regularMarketChangePercent|floatformat:2|intcomma}}%)
+                                </span>
+                            </td>
+                            <td>{{asset.follow_count|intcomma}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    {% include '../components/pagination.html' with page=followed page_query="follow-page" %}
-    {% else %}
-    <p class="fst-italic fw-light">No followed assets found.</p>
-    {% endif %}
 </div>
 
 {% endblock %}

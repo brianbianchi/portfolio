@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import asset, core, league, league_user, portfolio, stripe, user
+from .views import asset, core, league, league_user, portfolio, user
 
 urlpatterns = [
     # core
@@ -30,8 +30,4 @@ urlpatterns = [
     path("create_league/", league.create_league, name="create_league"),
     path("edit_league/<int:id>/", league.edit_league, name="edit_league"),
     path("invite/<int:league_id>/", league_user.invite, name="invite"),
-    # stripe
-    path("checkout/", stripe.checkout, name="checkout"),
-    path("manage_stripe/", stripe.manage_stripe, name="manage_stripe"),
-    path("stripe-webhook/", stripe.stripe_webhook, name="stripe-webhook"),
 ]

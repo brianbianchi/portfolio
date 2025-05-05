@@ -25,7 +25,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{form|crispy}}
-                <button type="submit" name="buy-btn" class="btn btn-success">Buy</button>
+                <button type="submit" name="buy-btn" class="btn btn-primary">Buy</button>
                 <button type="submit" name="sell-btn" class="btn btn-danger">Sell</button>
             </form>
             {% else %}
@@ -38,9 +38,10 @@
                     <tbody>
                         <tr>
                             <th scope="row">Price</th>
-                            <td>${{info.regularMarketPrice|floatformat:2|intcomma}}
+                            <td>
+                                ${{info.regularMarketPrice|floatformat:2|intcomma}}
                                 <span
-                                    style="color: {% if info.regularMarketChange >= 0 %}green{% else %}red{% endif %};">
+                                    class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
                                     {{info.regularMarketChange|floatformat:2|intcomma}}
                                     ({{info.regularMarketChangePercent|floatformat:2|intcomma}}%)
                                 </span>

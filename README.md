@@ -21,14 +21,6 @@ classDiagram
         +String username
         +Sting email
     }
-    class StripeSession {
-        +User user
-        +String stripe_customer_id
-        +String stripe_checkout_session_id
-        +String stripe_price_id
-        +League league
-        +bool is_paid
-    }
     class League {
         +User author
         +Decimal start_value
@@ -82,7 +74,6 @@ classDiagram
     User ..> League
     User ..> LeagueUser
     User ..> Portfolio
-    User --> "many" StripeSession : Contains
     User --> "many" FollowAsset : Contains
     League --> "many" LeagueUser : Contains
     League --> "many" Portfolio : Contains
