@@ -38,13 +38,13 @@
         </td>
         <td>
           {% if portfolio.day_change %}
-          <span class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+          <span class="badge text-bg-{% if portfolio.day_change >= 0 %}success{% else %}danger{% endif %}">
             {{portfolio.day_change|floatformat:2|intcomma}} ({{portfolio.day_perc_change|floatformat:2|intcomma}}%)
           </span>
           {% else %} - {% endif %}
         </td>
         <td>
-          <span class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+          <span class="badge text-bg-{% if portfolio.total_change >= 0 %}success{% else %}danger{% endif %}">
             {{portfolio.total_change|floatformat:2|intcomma}} ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
           </span>
         </td>

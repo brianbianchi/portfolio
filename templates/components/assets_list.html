@@ -40,8 +40,7 @@
                 <td>{{asset.quantity}}</td>
                 <td>${{asset.total_value|floatformat:2|intcomma}}</td>
                 <td>${{asset.value|floatformat:2|intcomma}}
-                    <span
-                        class="badge text-bg-{% if info.regularMarketChange >= 0 %}success{% else %}danger{% endif %}">
+                    <span class="badge text-bg-{% if asset.day_change >= 0 %}success{% else %}danger{% endif %}">
                         {{asset.day_change|floatformat:2|intcomma}} ({{asset.day_perc_change|floatformat:2|intcomma}}%)
                     </span>
                 </td>
