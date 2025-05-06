@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+import re
+from django.template import base as template_base
+
+# Add support for multi-line template tags
+template_base.tag_re = re.compile(template_base.tag_re.pattern, re.DOTALL)
 
 load_dotenv()
 

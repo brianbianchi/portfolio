@@ -6,20 +6,21 @@
 <div class="border-bottom mb-2">
     <h1>{{portfolio.name}}</h1>
     <h3>${{portfolio.value|intcomma}}</h3>
-    <span>
+    <p class="mb-1">
         Today:
         <span class="badge text-bg-{% if portfolio.day_change >= 0 %}success{% else %}danger{% endif %}">
             {{portfolio.day_change|floatformat:2|intcomma}}
             ({{portfolio.day_perc_change|floatformat:2|intcomma}}%)
         </span>
-    </span>
-    <span>
         Total:
         <span class="badge text-bg-{% if portfolio.total_change >= 0 %}success{% else %}danger{% endif %}">
             {{portfolio.total_change|floatformat:2|intcomma}}
             ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
         </span>
-    </span>
+    </p>
+    <p class="mb-1">
+        Updated: {{portfolio.last_updated|naturaltime}}
+    </p>
     <p class="mb-1">
         League: <a href="{% url 'view_league' id=portfolio.league.id %}">
             {{portfolio.league.name}}

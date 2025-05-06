@@ -18,8 +18,10 @@
             <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
                 Create a{% if my_portfolios %}nother{% endif %} Portfolio
             </a>
-            {% include '../components/portfolios_list.html' with portfolios=my_portfolios
-            page_query="my-portfolios-page" %}
+            {% include '../components/portfolios_list.html' with
+            portfolios=my_portfolios
+            page_query="my-portfolios-page"
+            %}
         </div>
         {% endif %}
 

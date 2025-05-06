@@ -21,7 +21,6 @@
         </th>
         <th scope="col">Day change</th>
         <th scope="col">Total change</th>
-        <th scope="col">Last updated</th>
         <th scope="col">Created</th>
       </tr>
     </thead>
@@ -48,7 +47,6 @@
             {{portfolio.total_change|floatformat:2|intcomma}} ({{portfolio.total_perc_change|floatformat:2|intcomma}}%)
           </span>
         </td>
-        <td>{{portfolio.last_updated|naturaltime}}</td>
         <td>{{portfolio.created|naturalday}}</td>
       </tr>
       {% endfor %}
