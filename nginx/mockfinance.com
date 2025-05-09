@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name fintasy.io www.fintasy.io;
+    server_name mockfinance.com www.mockfinance.com;
 
     location / {
         proxy_set_header X-Real-IP $remote_addr;

@@ -12,14 +12,14 @@ ufw reload
 systemctl enable nginx
 
 # Assumes code directory
-cp /code/portfolio/nginx/fintasy.io /etc/nginx/sites-available/fintasy.io
-ln -s /etc/nginx/sites-available/fintasy.io /etc/nginx/sites-enabled/
+cp /code/portfolio/nginx/mockfinance.com /etc/nginx/sites-available/mockfinance.com
+ln -s /etc/nginx/sites-available/mockfinance.com /etc/nginx/sites-enabled/
 
 # Test nginx config syntax
 nginx -t
 
 systemctl restart nginx
 
-certbot --nginx -d fintasy.io
+certbot --nginx -d mockfinance.com
 
 systemctl status certbot.timer
