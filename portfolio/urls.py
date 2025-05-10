@@ -1,7 +1,26 @@
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path
+from django.views.generic.base import TemplateView
+
+from .sitemaps import StaticViewSitemap
 from .views import asset, core, league, league_user, portfolio, user
 
+sitemaps = {
+    "static": StaticViewSitemap,
+}
+
 urlpatterns = [
+    # robots
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
     # core
     path("", core.home, name="home"),
     path("search", core.search, name="search"),

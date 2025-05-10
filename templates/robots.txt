@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mockfinance.com/sitemap.xml
