@@ -44,5 +44,6 @@ def user(request, name):
             "followed": followed_paged,
         }
         return render(request, "core/user.html", context)
-    except:
-        return render(request, "shared/404.html")
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise e

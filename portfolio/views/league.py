@@ -29,7 +29,7 @@ def view_league(request, id):
         return render(request, "league/league.html", context)
     except Exception as e:
         print(e)
-        return render(request, "shared/404.html")
+        raise e
 
 
 @login_required(login_url="/login")

@@ -40,7 +40,7 @@ def asset(request, ticker):
         return render(request, "core/asset.html", context)
     except Exception as e:
         print(e)
-        return render(request, "shared/404.html")
+        return render(request, "404.html")
 
 
 @login_required

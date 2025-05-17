@@ -1,8 +1,11 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}Compete to make the best returns in the market{% endblock %}
 {% block content %}
+<div class="p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal text-body-emphasis">Mock finance</h1>
+    <div class="fs-5 text-body-secondary">Compete to make the best returns in the market</div>
+</div>
 <div class="row">
     <div class="col-lg-9 order-last order-lg-first">
         {% if user.is_authenticated %}
@@ -15,9 +18,6 @@
                 </svg>
                 My portfolios
             </h3>
-            <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
-                Create a{% if my_portfolios %}nother{% endif %} Portfolio
-            </a>
             {% include '../components/portfolios_list.html' with
             portfolios=my_portfolios
             page_query="my-portfolios-page"
@@ -34,6 +34,9 @@
                 </svg>
                 Top portfolios
             </h3>
+            <a href="{% url 'create_portfolio' league_id=1 %}" role="button" class="btn btn-primary btn-sm mb-2">
+                Create your own Portfolio
+            </a>
             {% include '../components/portfolios_list.html' with portfolios=portfolios page_query="portfolios-page" %}
         </div>
 

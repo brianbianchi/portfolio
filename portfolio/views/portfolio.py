@@ -35,7 +35,7 @@ def view_portfolio(request, id):
         return render(request, "portfolio/portfolio.html", context)
     except Exception as e:
         print(f"Error: {str(e)}")
-        return render(request, "shared/404.html")
+        raise e
 
 
 @login_required(login_url="/login")
